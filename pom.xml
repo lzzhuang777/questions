@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.lzz.questions</groupId>
+    <artifactId>questions</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>questions</name>
+    <description>java 试题</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>questions-content</module>
+        <module>questions-member</module>
+        <module>questions-question</module>
+        <module>questions-study</module>
+        <module>questions-channel</module>
+    </modules>
+</project>
+
