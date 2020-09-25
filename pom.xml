@@ -10,11 +10,21 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>questions-common</module>
         <module>questions-content</module>
         <module>questions-member</module>
         <module>questions-question</module>
         <module>questions-study</module>
         <module>questions-channel</module>
+        <module>questions-admin</module>
     </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
 </project>
 
