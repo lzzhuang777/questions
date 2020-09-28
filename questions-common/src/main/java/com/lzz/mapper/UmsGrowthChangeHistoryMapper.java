@@ -1,9 +1,8 @@
 package com.lzz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lzz.model.UmsMember;
+import com.lzz.model.UmsGrowthChangeHistory;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 
 /**
@@ -15,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @since 2020-09-27
  */
 @Mapper
-public interface UmsMemberMapper extends BaseMapper<UmsMember> {
+public interface UmsGrowthChangeHistoryMapper extends BaseMapper<UmsGrowthChangeHistory> {
 
 }

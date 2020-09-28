@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lzz.mapper.QmsQuestionMapper;
 import com.lzz.model.QmsQuestion;
 import com.lzz.service.QmsQuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,4 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQuestion> implements QmsQuestionService {
 
+    @Autowired
+    private QmsQuestionMapper qmsQuestionMapper;
+
+    @Override
+    public QmsQuestion getQuestionById(Long questionId) {
+        return qmsQuestionMapper.selectById(questionId);
+    }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @version 1.0
  * @date 2020/9/27 14:59
  */
-@FeignClient("questions-study")
+@FeignClient(name ="questions-study")
 public interface StudyTimeFeignSevice {
 
     @RequestMapping("/sms/smsStudyTime/list/{id}")

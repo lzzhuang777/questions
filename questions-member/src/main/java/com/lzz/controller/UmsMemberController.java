@@ -3,6 +3,7 @@ package com.lzz.controller;
 
 import com.lzz.api.CommonResult;
 import com.lzz.feign.StudyTimeFeignSevice;
+import com.lzz.feign.StudyViewLogFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +24,21 @@ public class UmsMemberController {
     @Autowired
     private StudyTimeFeignSevice studyTimeFeignSevice;
 
+    @Autowired
+    private StudyViewLogFeignService studyViewLogFeignService;
+
     @RequestMapping("/studytime/list/{id}")
     public CommonResult getMemberStudyTimeListTest(@PathVariable("id") Long id) {
 
-        //远程调用拿到该用户的学习时长（学习时长是mock数据）
-        return  studyTimeFeignSevice.memberStudyTimeTest(id);
-
+        return  CommonResult.success(studyTimeFeignSevice.memberStudyTimeTest(id));
     }
+
+    @RequestMapping("/viewLog/list/{id}")
+    public CommonResult getViewLogList(@PathVariable("id") Long id) {
+
+        return  CommonResult.success(studyViewLogFeignService.list(id,5,1));
+    }
+
+
 }
 

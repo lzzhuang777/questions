@@ -1,7 +1,8 @@
 package com.lzz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lzz.model.CmsNews;
+import com.lzz.model.CmsBanner;
+import org.apache.ibatis.annotations.Mapper;
 
 
 /**
@@ -12,6 +13,7 @@ import com.lzz.model.CmsNews;
  * @author macro
  * @since 2020-09-27
  */
-public interface CmsNewsMapper extends BaseMapper<CmsNews> {
+@Mapper
+public interface CmsBannerMapper extends BaseMapper<CmsBanner> {
 
 }

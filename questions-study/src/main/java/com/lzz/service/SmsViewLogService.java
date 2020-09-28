@@ -1,7 +1,10 @@
 package com.lzz.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lzz.model.SmsViewLog;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.lzz.model.SmsViewLog;
  */
 public interface SmsViewLogService extends IService<SmsViewLog> {
 
+     Page<SmsViewLog> getList(Long memberId, Integer pageSize, Integer pageNum);
 }

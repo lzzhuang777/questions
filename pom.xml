@@ -17,6 +17,7 @@
         <module>questions-study</module>
         <module>questions-channel</module>
         <module>questions-admin</module>
+        <module>questions-gateway</module>
     </modules>
 
 

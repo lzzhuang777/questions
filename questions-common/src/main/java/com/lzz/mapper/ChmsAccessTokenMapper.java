@@ -2,7 +2,8 @@ package com.lzz.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lzz.model.ChmsChannel;
+import com.lzz.model.ChmsAccessToken;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -12,6 +13,7 @@ import com.lzz.model.ChmsChannel;
  * @author macro
  * @since 2020-09-27
  */
-public interface ChmsChannelMapper extends BaseMapper<ChmsChannel> {
+@Mapper
+public interface ChmsAccessTokenMapper extends BaseMapper<ChmsAccessToken> {
 
 }

@@ -14,4 +14,6 @@ import com.lzz.model.QmsQuestion;
  */
 public interface QmsQuestionService extends IService<QmsQuestion> {
 
+    QmsQuestion getQuestionById( Long questionId);
+
 }
