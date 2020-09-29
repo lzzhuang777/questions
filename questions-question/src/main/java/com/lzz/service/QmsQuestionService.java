@@ -1,5 +1,6 @@
 package com.lzz.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lzz.model.QmsQuestion;
 
@@ -14,6 +15,11 @@ import com.lzz.model.QmsQuestion;
  */
 public interface QmsQuestionService extends IService<QmsQuestion> {
 
+    boolean create(QmsQuestion qmsQuestion);
+
+    boolean update(Long id, QmsQuestion qmsQuestion);
+
     QmsQuestion getQuestionById( Long questionId);
 
+    Page<QmsQuestion> list (String title, Long type,Integer pageSize,Integer pageNum);
 }
