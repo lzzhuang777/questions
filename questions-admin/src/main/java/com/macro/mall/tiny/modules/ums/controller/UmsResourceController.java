@@ -1,8 +1,8 @@
 package com.macro.mall.tiny.modules.ums.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.macro.mall.tiny.common.api.CommonPage;
-import com.macro.mall.tiny.common.api.CommonResult;
+import com.lzz.api.CommonPage;
+import com.lzz.api.CommonResult;
 import com.macro.mall.tiny.modules.ums.model.UmsResource;
 import com.macro.mall.tiny.modules.ums.service.UmsResourceService;
 import com.macro.mall.tiny.security.component.DynamicSecurityMetadataSource;

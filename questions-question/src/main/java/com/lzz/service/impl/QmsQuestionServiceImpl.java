@@ -19,7 +19,7 @@ import java.util.Date;
  *  服务实现类
  * </p>
  *
- * @author macro
+ * @author lzz
  * @since 2020-09-27
  */
 @Service
@@ -58,7 +58,7 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
             lambda.eq(QmsQuestion ::getType,type);
         }
         lambda.eq(QmsQuestion::getDelFlag,0);
-        lambda.orderByDesc(QmsQuestion::getDisplayOrder);
+        lambda.orderByAsc(QmsQuestion::getDisplayOrder);
         return page(page,wrapper);
     }
 

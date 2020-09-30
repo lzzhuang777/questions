@@ -10,7 +10,7 @@ import com.lzz.model.QmsQuestion;
  *  服务类
  * </p>
  *
- * @author macro
+ * @author lzz
  * @since 2020-09-27
  */
 public interface QmsQuestionService extends IService<QmsQuestion> {

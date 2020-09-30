@@ -1,6 +1,6 @@
 package com.macro.mall.tiny.modules.ums.controller;
 
-import com.macro.mall.tiny.common.api.CommonResult;
+import com.lzz.api.CommonResult;
 import com.macro.mall.tiny.modules.ums.model.UmsResourceCategory;
 import com.macro.mall.tiny.modules.ums.service.UmsResourceCategoryService;
 import io.swagger.annotations.Api;

@@ -1,7 +1,8 @@
 package com.macro.mall.tiny.common.exception;
 
 
-import com.macro.mall.tiny.common.api.IErrorCode;
+import com.lzz.api.IErrorCode;
+
 
 /**
  * 自定义API异常

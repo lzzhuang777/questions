@@ -1,7 +1,8 @@
 package com.macro.mall.tiny.common.exception;
 
 
-import com.macro.mall.tiny.common.api.IErrorCode;
+import com.lzz.api.IErrorCode;
+
 
 /**
  * 断言处理类，用于抛出各种API异常

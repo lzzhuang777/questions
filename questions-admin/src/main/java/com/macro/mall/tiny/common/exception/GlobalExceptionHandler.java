@@ -1,6 +1,6 @@
 package com.macro.mall.tiny.common.exception;
 
-import com.macro.mall.tiny.common.api.CommonResult;
+import com.lzz.api.CommonResult;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
