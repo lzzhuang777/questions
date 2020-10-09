@@ -15,5 +15,7 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
-
+    <select id="selectFailQuestions" resultType="">
+        SELECT type_name,count(ques_id) from sms_view_log WHERE member_id = 1 GROUP BY ques_type
+    </select>
 </mapper>
