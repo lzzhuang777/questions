@@ -8,9 +8,12 @@
         <result column="ques_id" property="quesId" />
         <result column="ques_type" property="quesType" />
         <result column="member_id" property="memberId" />
+        <result column="answer" property="answer" />
+        <result column="result" property="result" />
         <result column="del_flag" property="delFlag" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+
 
 </mapper>

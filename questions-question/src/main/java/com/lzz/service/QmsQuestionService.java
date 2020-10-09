@@ -27,4 +27,6 @@ public interface QmsQuestionService extends IService<QmsQuestion> {
     Page<QmsQuestion> list (String title, Long type,Integer pageSize,Integer pageNum);
 
     List<QmsAnswer> getAnswerList(Long id);
+
+    List<QmsQuestion> getQuestionsByIds(List<Long> ids);
 }

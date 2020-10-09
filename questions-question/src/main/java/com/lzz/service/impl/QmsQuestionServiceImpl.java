@@ -14,6 +14,7 @@ import com.lzz.service.QmsQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,9 +72,21 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
     public List<QmsAnswer> getAnswerList(Long id) {
 
         QueryWrapper<QmsAnswer> queryWrapper = new QueryWrapper<>();
-        LambdaQueryWrapper<QmsAnswer> lamba = queryWrapper.lambda();
-        lamba.eq(QmsAnswer :: getQuestionId,id);
+        LambdaQueryWrapper<QmsAnswer> lambda = queryWrapper.lambda();
+        lambda.eq(QmsAnswer :: getQuestionId,id);
         return qmsAnswerMapper.selectList(queryWrapper);
 
     }
+
+    @Override
+    public List<QmsQuestion> getQuestionsByIds(List<Long> ids){
+
+        List<QmsQuestion> list = new ArrayList<>(ids.size());
+        for (Long id : ids){
+            QmsQuestion qmsQuestion = getQuestionById(id);
+            list.add(qmsQuestion);
+        }
+        return list;
+    }
+
 }

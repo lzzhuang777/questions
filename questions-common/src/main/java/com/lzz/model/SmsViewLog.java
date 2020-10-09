@@ -12,11 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * <p>
- * 
- * </p>
- *
- * @author macro
+ * @author lzz
  * @since 2020-09-27
  */
 @Data
@@ -39,6 +35,12 @@ public class SmsViewLog implements Serializable {
 
     @ApiModelProperty(value = "用户id")
     private Long memberId;
+
+    @ApiModelProperty(value = "用户做题答案")
+    private String answer;
+
+    @ApiModelProperty(value = "用户做题结果（0-正确，1-错误）")
+    private Integer result;
 
     @ApiModelProperty(value = "删除标记（0-正常，1-删除）")
     private Boolean delFlag;
