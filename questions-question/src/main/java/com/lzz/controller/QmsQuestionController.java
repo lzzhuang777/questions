@@ -4,11 +4,14 @@ package com.lzz.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.model.QmsAnswer;
 import com.lzz.model.QmsQuestion;
 import com.lzz.service.QmsQuestionService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -63,6 +66,17 @@ public class QmsQuestionController {
                                                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum){
         Page<QmsQuestion> qmsQuestionList = qmsQuestionService.list(title,type,pageSize,pageNum);
         return CommonResult.success(CommonPage.restPage(qmsQuestionList));
+    }
+
+    @ApiOperation("根据题目 id 查询答案")
+    @RequestMapping(value = "/answerList/{questionId}",method = RequestMethod.GET)
+    public CommonResult<List<QmsAnswer>> getAnswerList (@PathVariable Long questionId){
+
+        List<QmsAnswer> answerList = qmsQuestionService.getAnswerList(questionId);
+        if(answerList.size()>0){
+            return CommonResult.success(answerList);
+        }
+        return CommonResult.failed();
     }
 
 

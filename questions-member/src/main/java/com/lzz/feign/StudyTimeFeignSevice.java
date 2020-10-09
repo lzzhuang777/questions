@@ -14,5 +14,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface StudyTimeFeignSevice {
 
     @RequestMapping("/sms/smsStudyTime/list/{id}")
-    public CommonResult memberStudyTimeTest(@PathVariable("id") Long id);
+    CommonResult memberStudyTimeTest(@PathVariable("id") Long id);
 }

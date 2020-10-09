@@ -35,8 +35,11 @@ public class QmsQuestion implements Serializable {
     @ApiModelProperty(value = "题目标题")
     private String title;
 
-    @ApiModelProperty(value = "题目解答")
+    @ApiModelProperty(value = "题目解答解析")
     private String answer;
+
+    @ApiModelProperty(value = "正确答案id")
+    private Long answerId;
 
     @ApiModelProperty(value = "题目难度等级")
     @TableField("LEVEL")
