@@ -4,9 +4,11 @@ package com.lzz.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.QmsAnswer;
 import com.lzz.model.QmsQuestion;
 import com.lzz.service.QmsQuestionService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import java.util.List;
  * @author lzz
  * @since 2020-09-27
  */
+@Api(tags = "QmsQuestionController", description = "试题模块")
 @RestController
 @RequestMapping("/qms/qmsQuestion")
 public class QmsQuestionController {
@@ -77,6 +80,13 @@ public class QmsQuestionController {
             return CommonResult.success(answerList);
         }
         return CommonResult.failed();
+    }
+
+    @ApiOperation("根据题目 ids 查询答案集合")
+    @RequestMapping(value = "/getQuestionsByIds",method = RequestMethod.POST)
+    public List<QuestionAnswerVO> getQuestionsByIds(@RequestBody List<Long> ids){
+
+       return qmsQuestionService.getQuestionsByIds(ids);
     }
 
 

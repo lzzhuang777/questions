@@ -3,6 +3,9 @@ package com.lzz.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lzz.model.QmsQuestion;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 /**
@@ -15,5 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface QmsQuestionMapper extends BaseMapper<QmsQuestion> {
+
+    List<QmsQuestion> getQuestionsByIds(@Param("ids") List<Long> ids);
 
 }

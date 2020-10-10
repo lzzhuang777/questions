@@ -2,6 +2,7 @@ package com.lzz.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.QmsAnswer;
 import com.lzz.model.QmsQuestion;
 
@@ -28,5 +29,5 @@ public interface QmsQuestionService extends IService<QmsQuestion> {
 
     List<QmsAnswer> getAnswerList(Long id);
 
-    List<QmsQuestion> getQuestionsByIds(List<Long> ids);
+    List<QuestionAnswerVO> getQuestionsByIds(List<Long> ids);
 }

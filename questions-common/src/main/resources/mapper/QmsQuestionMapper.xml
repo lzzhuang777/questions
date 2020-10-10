@@ -18,4 +18,11 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <select id="getQuestionsByIds" resultMap="BaseResultMap">
+        select * from qms_question where id in
+        <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

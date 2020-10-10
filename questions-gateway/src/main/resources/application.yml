@@ -1,11 +1,30 @@
 server:
   port: 9201
 spring:
+  application:
+    name: questions-gateway
   cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
     gateway:
+      routes:
+        - id: questions-study
+          uri: lb://questions-study
+          predicates:
+            - Path=/questions-study/**
+          filters:
+            - StripPrefix=1
+        - id: questions-question
+          uri: lb://questions-question
+          predicates:
+            - Path=/questions-question/**
+          filters:
+            - StripPrefix=1
       discovery:
         locator:
-          enabled: true
-          lower-case-service-id: true #ʹ��Сдservice-id
+          enabled: true  #开启从注册中心动态创建路由的功能
+          lower-case-service-id: true #使用小写服务名，默认是大写
 
 

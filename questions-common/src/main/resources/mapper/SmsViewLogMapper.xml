@@ -15,7 +15,11 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
-    <select id="selectFailQuestions" resultType="">
-        SELECT type_name,count(ques_id) from sms_view_log WHERE member_id = 1 GROUP BY ques_type
+    <select id="selectFailQuestions"  resultType="com.lzz.dto.FailQuestionVO">
+        SELECT type_name,count(ques_id) as count from sms_view_log WHERE member_id = #{memberId} GROUP BY ques_type
+    </select>
+
+    <select id="selectQuesIds" resultType="Long">
+        select ques_id from  sms_view_log where member_id = #{memberId} and ques_type = #{quesType}
     </select>
 </mapper>
