@@ -26,6 +26,9 @@ public class QuestionAnswerVO {
     @ApiModelProperty(value = "正确答案id")
     private Long answerId;
 
+    @ApiModelProperty(value = "用户解答答案id")
+    private Long memberAnswerId;
+
     @ApiModelProperty(value = "题目难度等级")
     private Integer level;
 
