@@ -2,6 +2,7 @@ package com.macro.mall.tiny.modules.qms.controller;
 
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.model.QmsAnswer;
 import com.lzz.model.QmsQuestion;
 import com.macro.mall.tiny.feign.QuestionFeignService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author lzz
@@ -54,6 +57,18 @@ public class QmsQuestionController {
     public CommonResult update(@PathVariable Long id,
                                @RequestBody QmsQuestion qmsQuestion) {
         return questionFeignService.update(id, qmsQuestion);
+    }
+
+    @ApiOperation("根据题目 id 查询答案")
+    @ResponseBody
+    @RequestMapping(value = "/answerList/{questionId}",method = RequestMethod.GET)
+    public CommonResult<List<QmsAnswer>> getAnswerList (@PathVariable Long questionId){
+
+        List<QmsAnswer> answerList = questionFeignService.getAnswerList(questionId).getData();
+        if(answerList.size()>0){
+            return CommonResult.success(answerList);
+        }
+        return CommonResult.failed();
     }
 
 

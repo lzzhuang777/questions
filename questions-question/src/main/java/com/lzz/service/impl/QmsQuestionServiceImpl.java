@@ -39,6 +39,8 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
 
     @Override
     public boolean create(QmsQuestion qmsQuestion) {
+
+
         return save(qmsQuestion);
     }
 
@@ -95,5 +97,7 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
         }
         return voList;
     }
+
+
 
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lzz.mapper.QmsTestMapper;
 import com.lzz.model.QmsTest;
 import com.lzz.service.QmsTestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,5 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class QmsTestServiceImpl extends ServiceImpl<QmsTestMapper, QmsTest> implements QmsTestService {
 
+    @Autowired
+    private QmsTestMapper qmsTestMapper;
 
+    @Override
+    public boolean create(QmsTest qmsTest) {
+        return false;
+    }
 }

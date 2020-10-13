@@ -9,4 +9,6 @@ import com.lzz.model.QmsTest;
  * @date 2020/10/12 13:05
  */
 public interface QmsTestService extends IService<QmsTest> {
+
+    boolean create(QmsTest qmsTest);
 }
