@@ -21,4 +21,6 @@ public interface SmsMemberTestService extends IService<SmsMemberTest> {
 
     List<QuestionAnswerVO> getTestQuesList (Long testId);
 
+    SmsMemberTest submitTest(Long memberTestId);
+
 }

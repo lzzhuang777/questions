@@ -31,7 +31,7 @@ public class SmsMemberTestController {
     private SmsTestAnswerService smsTestAnswerService;
 
     @ApiOperation("查询用户测验集合")
-    @RequestMapping(value = "getTestByMemberId/{memberId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getTestByMemberId/{memberId}", method = RequestMethod.GET)
     public CommonResult<List<SmsMemberTest>> getTestByMemberId(@PathVariable Long memberId) {
 
         List<SmsMemberTest> list = smsMemberTestService.getTestByMemberId(memberId);
@@ -41,9 +41,8 @@ public class SmsMemberTestController {
         return CommonResult.success(list);
     }
 
-
     @ApiOperation("查询测验结果")
-    @RequestMapping(value = "getTestResult/{testId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getTestResult/{testId}", method = RequestMethod.GET)
     public CommonResult<List<SmsTestAnswer>> getTestResult(@PathVariable Long testId) {
 
         List<SmsTestAnswer> list = smsTestAnswerService.getTestAnswer(testId);
@@ -54,15 +53,38 @@ public class SmsMemberTestController {
     }
 
     @ApiOperation("查询测验题目列表")
-    @RequestMapping(value = "getTestQuesList/{testId}", method = RequestMethod.GET)
-    public CommonResult<List<QuestionAnswerVO>> getTestQuesList (@PathVariable Long testId){
+    @RequestMapping(value = "/getTestQuesList/{memberTestId}", method = RequestMethod.GET)
+    public CommonResult<List<QuestionAnswerVO>> getTestQuesList (@PathVariable Long memberTestId){
 
-        List<QuestionAnswerVO> list = smsMemberTestService.getTestQuesList(testId);
+        List<QuestionAnswerVO> list = smsMemberTestService.getTestQuesList(memberTestId);
         if(CollUtil.isEmpty(list)){
             return CommonResult.failed();
         }
         return CommonResult.success(list);
     }
+
+    @ApiOperation("选择题目答案")
+    @RequestMapping(value = "/submitQuesAnswer", method = RequestMethod.POST)
+    public CommonResult submitQuesAnswer(@RequestBody SmsTestAnswer smsTestAnswer){
+
+        boolean result = smsTestAnswerService.submitQuesAnswer(smsTestAnswer);
+        if(result){
+            return CommonResult.success(null);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation("提交测验")
+    @RequestMapping(value = "/submitTest/{memberTestId}", method = RequestMethod.GET)
+    public CommonResult submitTest(@PathVariable Long memberTestId){
+
+        SmsMemberTest result = smsMemberTestService.submitTest(memberTestId);
+        if(result!= null){
+            return CommonResult.success(result);
+        }
+        return CommonResult.failed();
+    }
+
 
 
 

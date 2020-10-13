@@ -14,4 +14,6 @@ public interface SmsTestAnswerService extends IService<SmsTestAnswer> {
 
     List<SmsTestAnswer> getTestAnswer (Long testId);
 
+    boolean submitQuesAnswer(SmsTestAnswer smsTestAnswer);
+
 }

@@ -7,7 +7,6 @@
         <id column="id" property="id" />
         <result column="title" property="title" />
         <result column="answer" property="answer" />
-        <result column="answer_id" property="answerId" />
         <result column="LEVEL" property="level" />
         <result column="display_order" property="displayOrder" />
         <result column="sub_title" property="subTitle" />

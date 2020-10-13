@@ -89,6 +89,7 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
             QuestionAnswerVO questionAnswerVO = new QuestionAnswerVO();
             BeanUtil.copyProperties(question, questionAnswerVO);
             List<QmsAnswer> answerList = getAnswerList(question.getId());
+            questionAnswerVO.setQuesId(question.getId());
             questionAnswerVO.setAnswerList(answerList);
             voList.add(questionAnswerVO);
         }

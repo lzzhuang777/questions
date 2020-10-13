@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.lzz.model.SmsTestAnswer">
         <id column="id" property="id" />
-        <result column="test_id" property="testId" />
+        <result column="member_test_id" property="memberTestId" />
         <result column="ques_id" property="quesId" />
         <result column="is_correct" property="isCorrect" />
         <result column="answer" property="answer" />

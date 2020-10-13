@@ -1,5 +1,7 @@
 package com.lzz.feign;
 
+import com.lzz.api.CommonResult;
+import com.lzz.model.QmsQuestion;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,4 +20,7 @@ public interface TestFeignService {
 
     @RequestMapping(value = "/qms/qmsTest/selectIdsByTestId/{testId}", method = RequestMethod.GET)
     List<Long> selectIdsByTestId(@PathVariable Long testId);
+
+    @RequestMapping(value = "/qms/qmsTest/{questionId}",method = RequestMethod.GET)
+    CommonResult<QmsQuestion> getQuestionById(@PathVariable Long questionId);
 }

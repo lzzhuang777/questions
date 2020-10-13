@@ -32,7 +32,7 @@ public class SmsTestAnswer implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "用户测验 SmsMemberTest id")//SmsMemberTest
-    private Long testId;
+    private Long memberTestId;
 
     @ApiModelProperty(value = "题目 id")
     private Long quesId;
@@ -41,7 +41,7 @@ public class SmsTestAnswer implements Serializable {
     private Boolean isCorrect;
 
     @ApiModelProperty(value = "答案")
-    private Long answer;
+    private String answer;
 
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;

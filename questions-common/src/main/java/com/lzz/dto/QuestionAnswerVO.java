@@ -20,14 +20,11 @@ public class QuestionAnswerVO {
     @ApiModelProperty(value = "题目标题")
     private String title;
 
-    @ApiModelProperty(value = "题目解答解析")
+    @ApiModelProperty(value = "正确答案")
     private String answer;
 
-    @ApiModelProperty(value = "正确答案id")
-    private Long answerId;
-
-    @ApiModelProperty(value = "用户解答答案id")
-    private Long memberAnswerId;
+    @ApiModelProperty(value = "用户选择答案")
+    private String memberAnswer;
 
     @ApiModelProperty(value = "题目难度等级")
     private Integer level;

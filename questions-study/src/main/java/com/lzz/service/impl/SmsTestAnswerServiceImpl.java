@@ -1,6 +1,5 @@
 package com.lzz.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lzz.mapper.SmsTestAnswerMapper;
@@ -25,8 +24,12 @@ public class SmsTestAnswerServiceImpl extends ServiceImpl<SmsTestAnswerMapper, S
     @Override
     public List<SmsTestAnswer> getTestAnswer( Long testId) {
         QueryWrapper<SmsTestAnswer> wrapper = new QueryWrapper<>();
-        LambdaQueryWrapper<SmsTestAnswer> lamba = wrapper.lambda();
-        lamba.eq(SmsTestAnswer::getTestId,testId);
-        return list(wrapper);
+        wrapper.lambda().eq(SmsTestAnswer::getMemberTestId,testId);
+        return smsTestAnswerMapper.selectList(wrapper);
+    }
+
+    @Override
+    public boolean submitQuesAnswer(SmsTestAnswer smsTestAnswer) {
+        return save(smsTestAnswer);
     }
 }
