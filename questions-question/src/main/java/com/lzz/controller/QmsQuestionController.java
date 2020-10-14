@@ -34,8 +34,8 @@ public class QmsQuestionController {
 
     @ApiOperation("添加试题")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public CommonResult create(@RequestBody QmsQuestion qmsQuestion) {
-        boolean success = qmsQuestionService.create(qmsQuestion);
+    public CommonResult create(@RequestBody QuestionAnswerVO questionAnswerVO) {
+        boolean success = qmsQuestionService.create(questionAnswerVO);
         if (success) {
             return CommonResult.success(null);
         } else {
@@ -44,10 +44,9 @@ public class QmsQuestionController {
     }
 
     @ApiOperation("修改试题")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public CommonResult update(@PathVariable Long id,
-                               @RequestBody QmsQuestion qmsQuestion) {
-        boolean success = qmsQuestionService.update(id, qmsQuestion);
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public CommonResult update(@RequestBody QuestionAnswerVO questionAnswerVO) {
+        boolean success = qmsQuestionService.update( questionAnswerVO);
         if (success) {
             return CommonResult.success(null);
         } else {
@@ -87,6 +86,13 @@ public class QmsQuestionController {
     public List<QuestionAnswerVO> getQuestionsByIds(@RequestBody List<Long> ids){
 
        return qmsQuestionService.getQuestionsByIds(ids);
+    }
+
+    @ApiOperation("根据题目 ids 查询答案集合")
+    @RequestMapping(value = "/getQuestionAnswerVO/{id}",method = RequestMethod.GET)
+    public QuestionAnswerVO getQuestionAnswerVO(@PathVariable Long id){
+
+        return qmsQuestionService.getQuestionAnswerVO(id);
     }
 
 

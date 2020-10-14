@@ -1,5 +1,6 @@
 package com.lzz.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lzz.model.QmsTest;
 
@@ -11,4 +12,8 @@ import com.lzz.model.QmsTest;
 public interface QmsTestService extends IService<QmsTest> {
 
     boolean create(QmsTest qmsTest);
+
+    Page<QmsTest> list (String testName,Integer pageSize, Integer pageNum);
+
+
 }

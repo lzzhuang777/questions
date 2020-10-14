@@ -7,7 +7,6 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
-
     gateway:
       routes:
         - id: questions-study
@@ -20,6 +19,12 @@ spring:
           uri: lb://questions-question
           predicates:
             - Path=/questions-question/**
+          filters:
+            - StripPrefix=1
+        - id: questions-admin
+          uri: lb://questions-admin
+          predicates:
+            - Path=/question-admin/**
           filters:
             - StripPrefix=1
       discovery:

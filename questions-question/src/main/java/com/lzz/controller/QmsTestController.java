@@ -1,6 +1,9 @@
 package com.lzz.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.model.QmsQuestion;
 import com.lzz.model.QmsTest;
 import com.lzz.service.QmsTestQuestionRelationsService;
 import com.lzz.service.QmsTestService;
@@ -43,6 +46,15 @@ public class QmsTestController {
             return CommonResult.success(null);
         }
         return CommonResult.failed();
+    }
+
+    @ApiOperation("分页查询试题集合")
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public CommonResult<CommonPage<QmsTest>> list(@RequestParam(value = "testName",defaultValue = "") String testName,
+                                                      @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                      @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum){
+        Page<QmsTest> qmsTestList = qmsTestService.list(testName,pageSize,pageNum);
+        return CommonResult.success(CommonPage.restPage(qmsTestList));
     }
 
 

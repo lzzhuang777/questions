@@ -54,7 +54,7 @@ public class QmsQuestion implements Serializable {
 
     @ApiModelProperty(value = "是否显示")
     @TableField("ENABLE")
-    private Integer enable;
+    private Boolean enable;
 
     @ApiModelProperty(value = "删除标记（0-正常，1-删除）")
     private Boolean delFlag;

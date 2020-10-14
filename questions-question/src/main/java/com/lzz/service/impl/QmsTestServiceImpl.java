@@ -1,5 +1,9 @@
 package com.lzz.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lzz.mapper.QmsTestMapper;
 import com.lzz.model.QmsTest;
@@ -21,6 +25,18 @@ public class QmsTestServiceImpl extends ServiceImpl<QmsTestMapper, QmsTest> impl
 
     @Override
     public boolean create(QmsTest qmsTest) {
-        return false;
+        return save(qmsTest);
+    }
+
+    @Override
+    public Page<QmsTest> list(String testName, Integer pageSize, Integer pageNum) {
+
+        Page<QmsTest> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<QmsTest> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<QmsTest> lambda = wrapper.lambda();
+        if (!StrUtil.hasEmpty(testName)) {
+            lambda.like(QmsTest::getTestName, testName);
+        }
+        return page(page, wrapper);
     }
 }

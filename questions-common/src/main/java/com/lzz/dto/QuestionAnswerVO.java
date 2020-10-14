@@ -29,6 +29,9 @@ public class QuestionAnswerVO {
     @ApiModelProperty(value = "题目难度等级")
     private Integer level;
 
+    @ApiModelProperty(value = "是否显示")
+    private Boolean enable;
+
     @ApiModelProperty(value = "排序")
     private Integer displayOrder;
 

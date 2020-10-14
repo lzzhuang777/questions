@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.QmsAnswer;
 import com.lzz.model.QmsQuestion;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,9 +20,10 @@ import java.util.List;
  */
 public interface QmsQuestionService extends IService<QmsQuestion> {
 
-    boolean create(QmsQuestion qmsQuestion);
+    @Transactional
+    boolean create(QuestionAnswerVO questionAnswerVO);
 
-    boolean update(Long id, QmsQuestion qmsQuestion);
+    boolean update( QuestionAnswerVO questionAnswerVO);
 
     QmsQuestion getQuestionById( Long questionId);
 
@@ -30,4 +32,6 @@ public interface QmsQuestionService extends IService<QmsQuestion> {
     List<QmsAnswer> getAnswerList(Long id);
 
     List<QuestionAnswerVO> getQuestionsByIds(List<Long> ids);
+
+    QuestionAnswerVO getQuestionAnswerVO(Long id);
 }
