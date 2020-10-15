@@ -72,8 +72,9 @@ public class QmsQuestionController {
 
     @ApiOperation("查询试题")
     @RequestMapping(value = "/selectQuesList",method = RequestMethod.GET)
-    public CommonResult< List<QmsQuestion>> selectQuesList(@RequestParam(value = "query",defaultValue = "") String query){
-        List<QmsQuestion> qmsQuestionList = qmsQuestionService.selectQuesList(query);
+    public CommonResult< List<QmsQuestion>> selectQuesList(@RequestParam(value = "query",defaultValue = "") String query,
+                                                           @RequestParam(value = "testId") Long testId){
+        List<QmsQuestion> qmsQuestionList = qmsQuestionService.selectQuesList(query,testId);
         return CommonResult.success(qmsQuestionList);
     }
 
@@ -102,7 +103,12 @@ public class QmsQuestionController {
         return qmsQuestionService.getQuestionAnswerVO(id);
     }
 
+    @ApiOperation("查询测验的题目")
+    @RequestMapping(value = "/selectQuestionsByTestId/{testId}",method = RequestMethod.GET)
+    public List<QmsQuestion> selectQuestionsByTestId (@PathVariable Long testId){
 
+        return qmsQuestionService.selectQuestionsByTestId(testId);
+    }
 
 }
 

@@ -21,6 +21,8 @@ public interface QmsQuestionMapper extends BaseMapper<QmsQuestion> {
 
     List<QmsQuestion> getQuestionsByIds(@Param("ids") List<Long> ids);
 
-    List<QmsQuestion> selectQuesList(@Param("query") String query);
+    List<QmsQuestion> selectQuesList(@Param("query") String query,@Param("testId")Long testId);
+
+    List<QmsQuestion> selectQuestionsByTestId (@Param("testId") Long testId);
 
 }

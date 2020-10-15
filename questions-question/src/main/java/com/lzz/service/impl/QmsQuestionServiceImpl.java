@@ -132,7 +132,12 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
     }
 
     @Override
-    public List<QmsQuestion> selectQuesList(String query) {
-        return qmsQuestionMapper.selectQuesList(query);
+    public List<QmsQuestion> selectQuesList(String query,Long testId) {
+        return qmsQuestionMapper.selectQuesList(query,testId);
+    }
+
+    @Override
+    public List<QmsQuestion> selectQuestionsByTestId (Long testId){
+        return qmsQuestionMapper.selectQuestionsByTestId(testId);
     }
 }

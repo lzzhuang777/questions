@@ -29,11 +29,18 @@
         *
         FROM
         qms_question
+        WHERE
         <if test="query!=null and query!=''">
-            WHERE sub_title LIKE CONCAT('%', #{query}, '%')
+            sub_title LIKE CONCAT('%', #{query}, '%') and
         </if>
+        id not in (select ques_id from qms_test_question_relations where test_id = #{testId} )
+    </select>
 
-
+    <select id="selectQuestionsByTestId" resultMap="BaseResultMap">
+        select q.*
+        from qms_question q
+                 left join qms_test_question_relations t on q.id = t.ques_id
+        where t.test_id = #{testId}
     </select>
 
 </mapper>

@@ -41,5 +41,9 @@ public interface QuestionFeignService {
     QuestionAnswerVO getQuestionAnswerVO(@PathVariable Long id);
 
     @RequestMapping(value = "/qms/qmsQuestion/selectQuesList",method = RequestMethod.GET)
-    CommonResult< List<QmsQuestion>> selectQuesList(@RequestParam(value = "query",defaultValue = "") String query);
+    CommonResult< List<QmsQuestion>> selectQuesList(@RequestParam(value = "query",defaultValue = "") String query,
+                                                    @RequestParam(value = "testId") Long testId);
+
+    @RequestMapping(value = "/qms/qmsQuestion/selectQuestionsByTestId/{testId}",method = RequestMethod.GET)
+    List<QmsQuestion> selectQuestionsByTestId (@PathVariable Long testId);
 }

@@ -24,6 +24,6 @@ public interface TestFeignService {
                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum);
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/qms/qmsTest/create", method = RequestMethod.POST)
     CommonResult create(@RequestBody QmsTest qmsTest);
 }

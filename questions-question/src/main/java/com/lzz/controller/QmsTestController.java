@@ -30,7 +30,7 @@ public class QmsTestController {
     @Autowired
     private QmsTestService qmsTestService;
 
-    @ApiOperation("查询测验的试题")
+    @ApiOperation("查询测验的试题id")
     @RequestMapping(value = "selectIdsByTestId/{testId}", method = RequestMethod.GET)
     public List<Long> selectIdsByTestId(@PathVariable Long testId) {
 

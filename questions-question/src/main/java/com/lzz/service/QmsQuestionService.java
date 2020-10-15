@@ -35,5 +35,7 @@ public interface QmsQuestionService extends IService<QmsQuestion> {
 
     QuestionAnswerVO getQuestionAnswerVO(Long id);
 
-    List<QmsQuestion> selectQuesList(String query);
+    List<QmsQuestion> selectQuesList(String query,Long testId);
+
+    List<QmsQuestion> selectQuestionsByTestId (Long testId);
 }

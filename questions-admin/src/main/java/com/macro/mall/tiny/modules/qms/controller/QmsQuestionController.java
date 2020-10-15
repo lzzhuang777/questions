@@ -83,10 +83,18 @@ public class QmsQuestionController {
     @ApiOperation("分配查询试题")
     @ResponseBody
     @RequestMapping(value = "/selectQuesList",method = RequestMethod.GET)
-    public CommonResult< List<QmsQuestion>> selectQuesList(@RequestParam(value = "query",defaultValue = "") String query){
+    public CommonResult< List<QmsQuestion>> selectQuesList(@RequestParam(value = "query",defaultValue = "") String query,
+                                                           @RequestParam(value = "testId") Long testId){
 
-        return questionFeignService.selectQuesList(query);
+        return questionFeignService.selectQuesList(query,testId);
     }
 
+    @ApiOperation("查询测验已分配题目")
+    @ResponseBody
+    @RequestMapping(value = "/selectQuestionsByTestId/{testId}",method = RequestMethod.GET)
+    public CommonResult<List<QmsQuestion>> selectQuestionsByTestId (@PathVariable Long testId){
+        List<QmsQuestion> list = questionFeignService.selectQuestionsByTestId(testId);
+        return CommonResult.success(list);
+    }
 
 }
