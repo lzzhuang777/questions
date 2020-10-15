@@ -2,6 +2,7 @@ package com.macro.mall.tiny.modules.qms.controller;
 
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.QmsAnswer;
 import com.lzz.model.QmsQuestion;
 import com.macro.mall.tiny.feign.QuestionFeignService;
@@ -40,8 +41,8 @@ public class QmsQuestionController {
     @ApiOperation("添加试题")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create(@RequestBody QmsQuestion qmsQuestion) {
-        return questionFeignService.create(qmsQuestion);
+    public CommonResult create(@RequestBody QuestionAnswerVO questionAnswerVO) {
+        return questionFeignService.create(questionAnswerVO);
     }
 
     @ApiOperation("根据ID获取试题详情")
@@ -52,11 +53,10 @@ public class QmsQuestionController {
     }
 
     @ApiOperation("修改试题")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@PathVariable Long id,
-                               @RequestBody QmsQuestion qmsQuestion) {
-        return questionFeignService.update(id, qmsQuestion);
+    public CommonResult update(@RequestBody QuestionAnswerVO questionAnswerVO) {
+        return questionFeignService.update(questionAnswerVO);
     }
 
     @ApiOperation("根据题目 id 查询答案")
@@ -69,6 +69,15 @@ public class QmsQuestionController {
             return CommonResult.success(answerList);
         }
         return CommonResult.failed();
+    }
+
+    @ApiOperation("根据题目 id 查询答案")
+    @ResponseBody
+    @RequestMapping(value = "/getQuestionAnswerVO/{id}",method = RequestMethod.GET)
+    public CommonResult<QuestionAnswerVO> getQuestionAnswerVO(@PathVariable Long id){
+
+        QuestionAnswerVO questionAnswerVO = questionFeignService.getQuestionAnswerVO(id);
+        return CommonResult.success(questionAnswerVO);
     }
 
 

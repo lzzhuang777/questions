@@ -2,6 +2,7 @@ package com.macro.mall.tiny.feign;
 
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.QmsAnswer;
 import com.lzz.model.QmsQuestion;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -28,12 +29,14 @@ public interface QuestionFeignService {
     CommonResult<QmsQuestion> getQuestionById(@PathVariable Long questionId);
 
     @RequestMapping(value = "/qms/qmsQuestion/create", method = RequestMethod.POST)
-    CommonResult create(@RequestBody QmsQuestion qmsQuestion);
+    CommonResult create(@RequestBody QuestionAnswerVO questionAnswerVO);
 
-    @RequestMapping(value = "/qms/qmsQuestion/update/{id}", method = RequestMethod.POST)
-    CommonResult update(@PathVariable Long id,
-                        @RequestBody QmsQuestion qmsQuestion);
+    @RequestMapping(value = "/qms/qmsQuestion/update", method = RequestMethod.POST)
+    CommonResult update(@RequestBody QuestionAnswerVO questionAnswerVO);
 
     @RequestMapping(value = "/qms/qmsQuestion/answerList/{questionId}",method = RequestMethod.GET)
     CommonResult<List<QmsAnswer>> getAnswerList (@PathVariable Long questionId);
+
+    @RequestMapping(value = "/qms/qmsQuestion/getQuestionAnswerVO/{id}",method = RequestMethod.GET)
+    QuestionAnswerVO getQuestionAnswerVO(@PathVariable Long id);
 }
