@@ -70,6 +70,13 @@ public class QmsQuestionController {
         return CommonResult.success(CommonPage.restPage(qmsQuestionList));
     }
 
+    @ApiOperation("查询试题")
+    @RequestMapping(value = "/selectQuesList",method = RequestMethod.GET)
+    public CommonResult< List<QmsQuestion>> selectQuesList(@RequestParam(value = "query",defaultValue = "") String query){
+        List<QmsQuestion> qmsQuestionList = qmsQuestionService.selectQuesList(query);
+        return CommonResult.success(qmsQuestionList);
+    }
+
     @ApiOperation("根据题目 id 查询答案")
     @RequestMapping(value = "/answerList/{questionId}",method = RequestMethod.GET)
     public CommonResult<List<QmsAnswer>> getAnswerList (@PathVariable Long questionId){
@@ -88,7 +95,7 @@ public class QmsQuestionController {
        return qmsQuestionService.getQuestionsByIds(ids);
     }
 
-    @ApiOperation("根据题目 ids 查询答案集合")
+    @ApiOperation("根据题目 id 查询试题答案详情")
     @RequestMapping(value = "/getQuestionAnswerVO/{id}",method = RequestMethod.GET)
     public QuestionAnswerVO getQuestionAnswerVO(@PathVariable Long id){
 

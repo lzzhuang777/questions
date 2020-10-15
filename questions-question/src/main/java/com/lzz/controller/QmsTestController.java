@@ -57,5 +57,16 @@ public class QmsTestController {
         return CommonResult.success(CommonPage.restPage(qmsTestList));
     }
 
+    @ApiOperation("添加测验与试题关系")
+    @RequestMapping(value = "/addTestQuestions/{testId}", method = RequestMethod.POST)
+    public CommonResult addTestQuestions(@RequestBody List<Long> quesIds,@PathVariable Long testId) {
+
+        boolean result = qmsTestService.addTestQuestions(quesIds, testId);
+        if (result) {
+            return CommonResult.success(null);
+        }
+        return CommonResult.failed();
+    }
+
 
 }

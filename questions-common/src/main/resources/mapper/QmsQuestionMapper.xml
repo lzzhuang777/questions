@@ -4,17 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.lzz.model.QmsQuestion">
-        <id column="id" property="id" />
-        <result column="title" property="title" />
-        <result column="answer" property="answer" />
-        <result column="LEVEL" property="level" />
-        <result column="display_order" property="displayOrder" />
-        <result column="sub_title" property="subTitle" />
-        <result column="TYPE" property="type" />
-        <result column="ENABLE" property="enable" />
-        <result column="del_flag" property="delFlag" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="answer" property="answer"/>
+        <result column="LEVEL" property="level"/>
+        <result column="display_order" property="displayOrder"/>
+        <result column="sub_title" property="subTitle"/>
+        <result column="TYPE" property="type"/>
+        <result column="ENABLE" property="enable"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <select id="getQuestionsByIds" resultMap="BaseResultMap">
@@ -22,6 +22,18 @@
         <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </select>
+
+    <select id="selectQuesList" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        qms_question
+        <if test="query!=null and query!=''">
+            WHERE sub_title LIKE CONCAT('%', #{query}, '%')
+        </if>
+
+
     </select>
 
 </mapper>

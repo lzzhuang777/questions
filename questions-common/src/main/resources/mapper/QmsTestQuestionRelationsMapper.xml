@@ -12,4 +12,5 @@
     <select id="selectIdsByTestId" resultType="Long">
       select ques_id from qms_test_question_relations where test_id = #{testId}
     </select>
+
 </mapper>

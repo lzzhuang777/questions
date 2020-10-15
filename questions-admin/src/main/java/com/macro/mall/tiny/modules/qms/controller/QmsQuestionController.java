@@ -80,5 +80,13 @@ public class QmsQuestionController {
         return CommonResult.success(questionAnswerVO);
     }
 
+    @ApiOperation("分配查询试题")
+    @ResponseBody
+    @RequestMapping(value = "/selectQuesList",method = RequestMethod.GET)
+    public CommonResult< List<QmsQuestion>> selectQuesList(@RequestParam(value = "query",defaultValue = "") String query){
+
+        return questionFeignService.selectQuesList(query);
+    }
+
 
 }

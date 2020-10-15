@@ -131,6 +131,8 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
         return voList;
     }
 
-
-
+    @Override
+    public List<QmsQuestion> selectQuesList(String query) {
+        return qmsQuestionMapper.selectQuesList(query);
+    }
 }

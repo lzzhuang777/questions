@@ -20,4 +20,6 @@ public interface QmsTestQuestionRelationsMapper extends BaseMapper<QmsTestQuesti
 
     List<Long> selectIdsByTestId(@Param("testId") Long testId);
 
+    //int addTestQuestions(@Param("questIds") List<Long> quesIds,@Param("testId")Long testId);
+
 }
