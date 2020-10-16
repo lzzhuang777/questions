@@ -2,6 +2,7 @@ package com.macro.mall.tiny.modules.qms.controller;
 
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.dto.TestRelationParamVO;
 import com.lzz.model.QmsTest;
 import com.macro.mall.tiny.feign.TestFeignService;
 import io.swagger.annotations.Api;
@@ -47,6 +48,13 @@ public class QmsTestController {
     public CommonResult addTestQuestions(@RequestBody List<Long> quesIds, @PathVariable Long testId){
 
         return testFeignService.addTestQuestions(quesIds, testId);
+    }
+
+    @ApiOperation("解除测验题目关系")
+    @ResponseBody
+    @RequestMapping(value = "/delTestQuestions",method = RequestMethod.POST)
+    public CommonResult delTestQuestions (@RequestBody TestRelationParamVO relationParamVO){
+        return testFeignService.delTestQuestions(relationParamVO);
     }
 
 

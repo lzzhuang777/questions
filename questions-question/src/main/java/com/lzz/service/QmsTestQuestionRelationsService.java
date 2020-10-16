@@ -1,6 +1,7 @@
 package com.lzz.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lzz.dto.TestRelationParamVO;
 import com.lzz.model.QmsTestQuestionRelations;
 
 import java.util.List;
@@ -16,4 +17,6 @@ import java.util.List;
 public interface QmsTestQuestionRelationsService extends IService<QmsTestQuestionRelations> {
 
     List<Long> selectIdsByTestId (Long testId);
+
+    int delTestQuestions(TestRelationParamVO testRelationParamVO);
 }

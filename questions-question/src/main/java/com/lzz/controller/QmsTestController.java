@@ -3,6 +3,7 @@ package com.lzz.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.dto.TestRelationParamVO;
 import com.lzz.model.QmsQuestion;
 import com.lzz.model.QmsTest;
 import com.lzz.service.QmsTestQuestionRelationsService;
@@ -66,6 +67,17 @@ public class QmsTestController {
             return CommonResult.success(null);
         }
         return CommonResult.failed();
+    }
+
+    @ApiOperation("解除测验与试题关系")
+    @RequestMapping(value = "/delTestQuestions",method = RequestMethod.POST)
+    public CommonResult delTestQuestions (@RequestBody TestRelationParamVO relationParamVO){
+
+      int result = testQuestionRelationsService.delTestQuestions(relationParamVO);
+      if(result == 1){
+          return CommonResult.success(null);
+      }
+      return CommonResult.failed("解除关系失败");
     }
 
 

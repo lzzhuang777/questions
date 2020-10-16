@@ -1,6 +1,7 @@
 package com.lzz.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lzz.dto.LoginParam;
 import com.lzz.model.UmsMember;
 
 
@@ -13,5 +14,7 @@ import com.lzz.model.UmsMember;
  * @since 2020-09-27
  */
 public interface UmsMemberService extends IService<UmsMember> {
+
+    Object[] login(LoginParam loginParam);
 
 }

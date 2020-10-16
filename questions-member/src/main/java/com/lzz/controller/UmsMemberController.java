@@ -2,11 +2,14 @@ package com.lzz.controller;
 
 
 import com.lzz.api.CommonResult;
-import com.lzz.feign.StudyTimeFeignSevice;
-import com.lzz.feign.StudyViewLogFeignService;
+import com.lzz.dto.LoginParam;
+import com.lzz.service.UmsMemberService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,27 +20,24 @@ import org.springframework.web.bind.annotation.RestController;
  * @author macro
  * @since 2020-09-27
  */
+
+@Api(tags = "UmsMemberController", description = "用户模块")
 @RestController
 @RequestMapping("/ums/umsMember")
 public class UmsMemberController {
 
     @Autowired
-    private StudyTimeFeignSevice studyTimeFeignSevice;
+    private UmsMemberService umsMemberService;
 
-    @Autowired
-    private StudyViewLogFeignService studyViewLogFeignService;
+    @ApiOperation("用户登录")
+    @RequestMapping(value = "/ums/umsMember",method = RequestMethod.POST)
+    public CommonResult login(@RequestBody LoginParam loginParam){
 
-    @RequestMapping("/studytime/list/{id}")
-    public CommonResult getMemberStudyTimeListTest(@PathVariable("id") Long id) {
 
-        return  CommonResult.success(studyTimeFeignSevice.memberStudyTimeTest(id));
+        umsMemberService.login(loginParam);
+        return CommonResult.success(null);
     }
 
-    @RequestMapping("/viewLog/list/{id}")
-    public CommonResult getViewLogList(@PathVariable("id") Long id) {
-
-        return  CommonResult.success(studyViewLogFeignService.list(id,5,1));
-    }
 
 
 }

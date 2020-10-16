@@ -2,6 +2,7 @@ package com.macro.mall.tiny.feign;
 
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.dto.TestRelationParamVO;
 import com.lzz.model.QmsTest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -26,4 +27,7 @@ public interface TestFeignService {
 
     @RequestMapping(value = "/qms/qmsTest/create", method = RequestMethod.POST)
     CommonResult create(@RequestBody QmsTest qmsTest);
+
+    @RequestMapping(value = "/qms/qmsTest/delTestQuestions",method = RequestMethod.POST)
+    CommonResult delTestQuestions (@RequestBody TestRelationParamVO relationParamVO);
 }

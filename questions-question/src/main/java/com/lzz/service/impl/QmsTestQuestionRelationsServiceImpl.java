@@ -1,6 +1,8 @@
 package com.lzz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lzz.dto.TestRelationParamVO;
 import com.lzz.mapper.QmsTestQuestionRelationsMapper;
 import com.lzz.model.QmsTestQuestionRelations;
 import com.lzz.service.QmsTestQuestionRelationsService;
@@ -28,5 +30,14 @@ public class QmsTestQuestionRelationsServiceImpl extends ServiceImpl<QmsTestQues
 
        return  testQuestionRelationsMapper.selectIdsByTestId(testId);
        
+    }
+
+    @Override
+    public int delTestQuestions(TestRelationParamVO relationParamVO) {
+        QueryWrapper<QmsTestQuestionRelations> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(QmsTestQuestionRelations ::getQuesId,relationParamVO.getQuesId())
+                .eq(QmsTestQuestionRelations ::getTestId,relationParamVO.getTestId());
+        return testQuestionRelationsMapper.delete(wrapper);
+
     }
 }
