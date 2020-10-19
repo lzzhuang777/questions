@@ -30,12 +30,11 @@ public class UmsMemberController {
     private UmsMemberService umsMemberService;
 
     @ApiOperation("用户登录")
-    @RequestMapping(value = "/ums/umsMember",method = RequestMethod.POST)
+    @RequestMapping(value = "/p/ums/umsMember",method = RequestMethod.POST)
     public CommonResult login(@RequestBody LoginParam loginParam){
 
-
-        umsMemberService.login(loginParam);
-        return CommonResult.success(null);
+        Object o = umsMemberService.login(loginParam);
+        return CommonResult.success(o);
     }
 
 

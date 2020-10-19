@@ -13,4 +13,4 @@ spring:
 logging:
   level:
     root: info
-    com.lzz.mall: debug
+    com.lzz: debug

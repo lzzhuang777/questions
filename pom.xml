@@ -11,6 +11,7 @@
 
     <modules>
         <module>questions-common</module>
+        <module>questions-common-utils</module>
         <module>questions-content</module>
         <module>questions-member</module>
         <module>questions-question</module>
