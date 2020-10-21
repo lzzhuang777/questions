@@ -7,6 +7,11 @@ spring:
     name: questions-member
   profiles:
     active: dev
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: questions-port
   cloud:
     nacos:
       discovery:

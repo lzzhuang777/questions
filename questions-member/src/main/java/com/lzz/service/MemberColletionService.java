@@ -1,6 +1,7 @@
 package com.lzz.service;
 
 import com.lzz.domain.MemberCollectionQuestions;
+import org.bson.Document;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ import java.util.List;
  */
 public interface MemberColletionService {
 
-    List<MemberCollectionQuestions> list (Long memberId);
+    List<Document> list (Long memberId);
 
     void deleteByQuesIdAndMemberId(Long memberId,Long quesId);
+
+    void create(Long memberId,MemberCollectionQuestions memberCollectionQuestions);
 }

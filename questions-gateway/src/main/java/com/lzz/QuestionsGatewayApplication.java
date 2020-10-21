@@ -12,7 +12,7 @@ public class QuestionsGatewayApplication {
 
 
     public static void main(String[] args) {
-        //ElasticApmAttacher.attach();
+        ElasticApmAttacher.attach();
         SpringApplication.run(QuestionsGatewayApplication.class, args);
     }
 

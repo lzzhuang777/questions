@@ -3,7 +3,6 @@ package com.lzz.repository;
 import com.lzz.domain.MemberCollectionQuestions;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +14,6 @@ public interface MemberCollectionQuestionsRepository extends MongoRepository<Mem
 
     List<MemberCollectionQuestions> findByMemberIdOrderByCreateTimeDesc(Long memberId);
 
-    void deleteByQuesIdAndMemberId(Long quesId,Long memberId);
+    void deleteByQuesIdAndMemberId(Long quesId, Long memberId);
 
 }

@@ -12,7 +12,7 @@ public class QuestionsQuestionApplication {
 
     public static void main(String[] args) {
 
-        //ElasticApmAttacher.attach();
+        ElasticApmAttacher.attach();
         SpringApplication.run(QuestionsQuestionApplication.class, args);
     }
 
