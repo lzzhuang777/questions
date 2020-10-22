@@ -1,6 +1,7 @@
 package com.lzz.controller;
 
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
@@ -62,6 +63,7 @@ public class QmsQuestionController {
 
     @ApiOperation("分页查询试题集合")
     @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @SentinelResource(value = "list",blockHandler = "handleException")
     public CommonResult<CommonPage<QmsQuestion>> list(@RequestParam(value = "title",defaultValue = "") String title,
                                                                  @RequestParam(value = "type",defaultValue = "-1") Long type,
                                                                  @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
@@ -80,6 +82,7 @@ public class QmsQuestionController {
 
     @ApiOperation("根据题目 id 查询答案")
     @RequestMapping(value = "/answerList/{questionId}",method = RequestMethod.GET)
+    @SentinelResource(value = "getAnswerList",blockHandler = "handleException")
     public CommonResult<List<QmsAnswer>> getAnswerList (@PathVariable Long questionId){
 
         List<QmsAnswer> answerList = qmsQuestionService.getAnswerList(questionId);

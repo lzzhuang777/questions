@@ -1,5 +1,6 @@
 package com.lzz.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.lzz.domain.CollectionResultVO;
 import com.lzz.domain.MemberCollectionQuestions;
@@ -56,6 +57,13 @@ public class MemberColltionServiceImpl implements MemberColletionService {
         memberCollectionQuestions.setMemberId(memberId);
         memberCollectionQuestions.setCreateTime(new Date());
         memberCollectionQuestionsRepository.save(memberCollectionQuestions);
+    }
+
+    @Override
+    public boolean isCollection(Long memberId,Long quesId){
+
+        MemberCollectionQuestions m = memberCollectionQuestionsRepository.findByMemberIdAndQuesId(memberId, quesId);
+        return ObjectUtil.isNotEmpty(m);
     }
 
 

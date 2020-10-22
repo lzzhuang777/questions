@@ -1,6 +1,8 @@
 package com.lzz.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lzz.api.CommonPage;
 import com.lzz.model.CmsBanner;
 
 
@@ -13,5 +15,8 @@ import com.lzz.model.CmsBanner;
  * @since 2020-09-27
  */
 public interface CmsBannerService extends IService<CmsBanner> {
+
+
+    Page<CmsBanner> list (String title,Integer pageSize,Integer pageNum);
 
 }

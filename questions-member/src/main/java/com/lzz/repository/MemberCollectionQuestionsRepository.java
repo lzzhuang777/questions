@@ -16,4 +16,5 @@ public interface MemberCollectionQuestionsRepository extends MongoRepository<Mem
 
     void deleteByQuesIdAndMemberId(Long quesId, Long memberId);
 
+    MemberCollectionQuestions findByMemberIdAndQuesId(Long memberId,Long quesId);
 }

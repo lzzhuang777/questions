@@ -10,6 +10,10 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #配置sentinel dashboard地址
+        port: 8719
   main:
     allow-bean-definition-overriding: true
 

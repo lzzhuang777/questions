@@ -17,4 +17,6 @@ public interface MemberColletionService {
     void deleteByQuesIdAndMemberId(Long memberId,Long quesId);
 
     void create(Long memberId,MemberCollectionQuestions memberCollectionQuestions);
+
+    boolean isCollection(Long memberId,Long quesId);
 }

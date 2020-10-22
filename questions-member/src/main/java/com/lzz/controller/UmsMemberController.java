@@ -61,7 +61,7 @@ public class UmsMemberController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("收藏题目")
+    @ApiOperation("用户收藏题目")
     @RequestMapping(value = "/v/collectionQuestion/{id}", method = RequestMethod.POST)
     public CommonResult collectionQuestion(@PathVariable Long id, @RequestBody MemberCollectionQuestions memberCollectionQuestions){
 
@@ -69,7 +69,7 @@ public class UmsMemberController {
         return CommonResult.success(null);
     }
 
-    @ApiOperation("查询收藏题目")
+    @ApiOperation("查询用户收藏题目")
     @RequestMapping(value = "/v/selectCollections/{id}", method = RequestMethod.GET)
     public CommonResult selectCollections(@PathVariable Long id){
 
@@ -84,6 +84,17 @@ public class UmsMemberController {
         memberColletionService.deleteByQuesIdAndMemberId(id,quesId);
         return CommonResult.success(null);
     }
+
+    @ApiOperation("查询题目是否已收藏")
+    @RequestMapping(value = "/v/isCollection/{id}", method = RequestMethod.GET)
+    public CommonResult isCollection (@PathVariable Long id,@RequestParam Long quesId){
+
+        boolean result = memberColletionService.isCollection(id,quesId);
+        return CommonResult.success(result);
+    }
+
+
+
 
 }
 
