@@ -1,6 +1,7 @@
 package com.lzz.controller;
 
 import com.lzz.api.CommonResult;
+import com.lzz.domain.SignResultVO;
 import com.lzz.service.RedisService;
 import com.lzz.service.UmsSignService;
 import io.swagger.annotations.Api;
@@ -36,9 +37,9 @@ public class UmsSignController {
     @RequestMapping(value = "/selectSignIn", method = RequestMethod.GET)
     public CommonResult selectSignIn(@RequestParam Long memberId, @RequestParam Integer year, @RequestParam Integer month){
 
-        umsSignService.selectSignIn(memberId, year, month);
+        SignResultVO signResultVO = umsSignService.selectSignIn(memberId, year, month);
 
-        return CommonResult.success(null);
+        return CommonResult.success(signResultVO);
     }
 
 }

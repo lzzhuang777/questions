@@ -193,5 +193,5 @@ public interface RedisService {
     /**
      * 获取位图
      */
-    List<Long> bitField(String key,Integer count,long offset);
+    List<Long> bitField(String key,Integer count,long offset,boolean signed);
 }

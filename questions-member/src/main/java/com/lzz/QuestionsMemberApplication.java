@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class QuestionsMemberApplication {
 
     public static void main(String[] args) {
-        ElasticApmAttacher.attach();
+        //ElasticApmAttacher.attach();
         SpringApplication.run(QuestionsMemberApplication.class, args);
     }
 

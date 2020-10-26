@@ -1,6 +1,7 @@
 package com.lzz.service;
 
 
+import com.lzz.domain.SignResultVO;
 
 /**
  * @author lzz
@@ -11,5 +12,5 @@ public interface UmsSignService {
 
     boolean signIn(Long memberId);
 
-    void selectSignIn(Long memberId,Integer year,Integer month);
+    SignResultVO selectSignIn(Long memberId, Integer year, Integer month);
 }

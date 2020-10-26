@@ -3,11 +3,11 @@ package com.lzz.service.impl;
 import com.lzz.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.BitFieldSubCommands;
-import org.springframework.data.redis.connection.BitFieldSubCommands.BitFieldType;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -208,27 +208,19 @@ public class RedisServiceImpl implements RedisService {
         return redisTemplate.opsForValue().setBit(key, offset, value);
     }
 
-    public List<Long> bitField(String key,Integer count,long offset) {
-
-        BitFieldSubCommands.BitFieldSubCommand subCommand = new BitFieldSubCommands.BitFieldSubCommand() {
-            @Override
-            public String getCommand() {
-                return null;
-            }
-
-            @Override
-            public BitFieldType getType() {
-                return BitFieldType.unsigned(count);
-            }
-
-            @Override
-            public BitFieldSubCommands.Offset getOffset() {
-                return BitFieldSubCommands.Offset.offset(offset);
-            }
-        };
+    public List<Long> bitField(String key,Integer count,long offset,boolean signed) {
         BitFieldSubCommands bitFieldSubCommands = BitFieldSubCommands.create();
-        bitFieldSubCommands.getSubCommands().add(subCommand);
-        return redisTemplate.opsForValue().bitField(key,bitFieldSubCommands);
+        if(count < 1){
+            count = 1;
+        }
+        BitFieldSubCommands.BitFieldType bitFieldType;
+        if(signed){
+            bitFieldType = BitFieldSubCommands.BitFieldType.signed(count);
+        }else {
+            bitFieldType = BitFieldSubCommands.BitFieldType.unsigned(count);
+        }
+        bitFieldSubCommands = bitFieldSubCommands.get(bitFieldType).valueAt(offset);
+        return redisTemplate.opsForValue().bitField(key, bitFieldSubCommands);
 
     }
 
