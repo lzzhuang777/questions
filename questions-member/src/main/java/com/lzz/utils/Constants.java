@@ -14,5 +14,6 @@ public class Constants {
         public final static int REPLACEABLE_TIME_RANGE = 32 * 60;
         public final static int REPLACEMENT_PROTECTION_TIMEOUT = SESSION_TIMEOUT - REPLACEABLE_TIME_RANGE;//默认1.5h
         public final static int REPLACEMENT_DELAY = 2 * 60;//默认2min
+        public final static String USER_SIGN_IN = "userSign:%d:%d";
     }
 }

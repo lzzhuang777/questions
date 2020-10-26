@@ -2,11 +2,12 @@ package com.lzz.service.impl;
 
 import com.lzz.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.BitFieldSubCommands;
+import org.springframework.data.redis.connection.BitFieldSubCommands.BitFieldType;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -194,4 +195,41 @@ public class RedisServiceImpl implements RedisService {
     public Long lRemove(String key, long count, Object value) {
         return redisTemplate.opsForList().remove(key, count, value);
     }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public boolean getBit(String key, long offset) {
+        return redisTemplate.opsForValue().getBit(key, offset);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public boolean setBit(String key, long offset, boolean value) {
+        return redisTemplate.opsForValue().setBit(key, offset, value);
+    }
+
+    public List<Long> bitField(String key,Integer count,long offset) {
+
+        BitFieldSubCommands.BitFieldSubCommand subCommand = new BitFieldSubCommands.BitFieldSubCommand() {
+            @Override
+            public String getCommand() {
+                return null;
+            }
+
+            @Override
+            public BitFieldType getType() {
+                return BitFieldType.unsigned(count);
+            }
+
+            @Override
+            public BitFieldSubCommands.Offset getOffset() {
+                return BitFieldSubCommands.Offset.offset(offset);
+            }
+        };
+        BitFieldSubCommands bitFieldSubCommands = BitFieldSubCommands.create();
+        bitFieldSubCommands.getSubCommands().add(subCommand);
+        return redisTemplate.opsForValue().bitField(key,bitFieldSubCommands);
+
+    }
+
 }

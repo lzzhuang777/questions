@@ -179,4 +179,19 @@ public interface RedisService {
      * 从List结构中移除属性
      */
     Long lRemove(String key, long count, Object value);
+
+    /**
+     * 字符串值指定偏移量上原来储存的位(bit)
+     */
+    boolean getBit(String key,long offset);
+
+    /**
+     * 字符串值指定偏移量上原来储存的位(bit)
+     */
+    boolean setBit(String key, long offset, boolean value);
+
+    /**
+     * 获取位图
+     */
+    List<Long> bitField(String key,Integer count,long offset);
 }
