@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * @author lzz
  * @version 1.0
@@ -26,20 +28,27 @@ public class UmsSignController {
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     public CommonResult signIn(@RequestParam Long memberId) {
 
-       boolean result = umsSignService.signIn(memberId);
-       if(result){
-           return CommonResult.success(null);
-       }
-       return CommonResult.failed("今日已签到");
+        boolean result = umsSignService.signIn(memberId);
+        if (result) {
+            return CommonResult.success(null);
+        }
+        return CommonResult.failed("今日已签到");
     }
 
     @ApiOperation("查询用户在year年month月的签到情况")
     @RequestMapping(value = "/selectSignIn", method = RequestMethod.GET)
-    public CommonResult selectSignIn(@RequestParam Long memberId, @RequestParam Integer year, @RequestParam Integer month){
+    public CommonResult selectSignIn(@RequestParam Long memberId, @RequestParam Integer year, @RequestParam Integer month) {
 
         SignResultVO signResultVO = umsSignService.selectSignIn(memberId, year, month);
-
         return CommonResult.success(signResultVO);
+    }
+
+    @ApiOperation("设置签到积分规则")
+    @RequestMapping(value = "/integrationRules", method = RequestMethod.POST)
+    public CommonResult integrationRules(@RequestBody Map<String, Integer> map) {
+
+        umsSignService.integrationRules(map);
+        return CommonResult.success(null);
     }
 
 }

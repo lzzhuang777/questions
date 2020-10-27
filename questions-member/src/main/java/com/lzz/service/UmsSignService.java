@@ -3,6 +3,8 @@ package com.lzz.service;
 
 import com.lzz.domain.SignResultVO;
 
+import java.util.Map;
+
 /**
  * @author lzz
  * @version 1.0
@@ -13,4 +15,6 @@ public interface UmsSignService {
     boolean signIn(Long memberId);
 
     SignResultVO selectSignIn(Long memberId, Integer year, Integer month);
+
+    void integrationRules(Map<String,Integer> map);
 }
