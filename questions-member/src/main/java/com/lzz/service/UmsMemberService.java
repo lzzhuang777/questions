@@ -19,4 +19,6 @@ public interface UmsMemberService extends IService<UmsMember> {
 
     String loadCurrentUserByTokenAsJson(String token);
 
+    int addIntegration(Integer integration,Long memberId);
+
 }

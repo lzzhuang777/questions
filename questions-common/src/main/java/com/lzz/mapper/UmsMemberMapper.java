@@ -3,6 +3,7 @@ package com.lzz.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lzz.model.UmsMember;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 
 /**
@@ -15,5 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UmsMemberMapper extends BaseMapper<UmsMember> {
+
+    int addIntegration (@Param("integration") Integer integration ,@Param("memberId") Long memberId);
 
 }

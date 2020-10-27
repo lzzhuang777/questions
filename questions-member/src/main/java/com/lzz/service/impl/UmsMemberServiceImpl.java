@@ -33,8 +33,12 @@ import org.springframework.stereotype.Service;
 public class UmsMemberServiceImpl extends ServiceImpl<UmsMemberMapper, UmsMember> implements UmsMemberService {
 
     private Logger logger = LoggerFactory.getLogger(UmsMemberServiceImpl.class);
+
+    @Autowired
+    private UmsMemberMapper umsMemberMapper;
     @Autowired
     private RedisService redisService;
+
     @Override
     public Object[] login(LoginParam loginParam) {
 
@@ -71,6 +75,11 @@ public class UmsMemberServiceImpl extends ServiceImpl<UmsMemberMapper, UmsMember
             throw new ApiException(ResultCode.UNAUTHORIZED);
         }
         return tokenUser;
+    }
+
+    @Override
+    public int addIntegration(Integer integration,Long memberId){
+        return umsMemberMapper.addIntegration(integration, memberId);
     }
 
 }

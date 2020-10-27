@@ -51,4 +51,15 @@ public class UmsSignController {
         return CommonResult.success(null);
     }
 
+    @ApiOperation("领取签到累积积分")
+    @RequestMapping(value = "/cumulativeSign/{memberId}", method = RequestMethod.POST)
+    public CommonResult cumulativeSign(@PathVariable Long memberId, @RequestParam String signCount) {
+
+        int result = umsSignService.cumulativeSign(memberId, signCount);
+        if (result > 0) {
+            return CommonResult.success(null);
+        }
+        return CommonResult.failed();
+    }
+
 }

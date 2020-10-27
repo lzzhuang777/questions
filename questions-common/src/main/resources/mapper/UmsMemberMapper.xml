@@ -4,26 +4,32 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.lzz.model.UmsMember">
-        <id column="id" property="id" />
-        <result column="mini_openid" property="miniOpenid" />
-        <result column="mp_openid" property="mpOpenid" />
-        <result column="unionid" property="unionid" />
-        <result column="level_id" property="levelId" />
-        <result column="user_name" property="userName" />
-        <result column="PASSWORD" property="password" />
-        <result column="nickname" property="nickname" />
-        <result column="phone" property="phone" />
-        <result column="email" property="email" />
-        <result column="avatar" property="avatar" />
-        <result column="gender" property="gender" />
-        <result column="birth" property="birth" />
-        <result column="city" property="city" />
-        <result column="source_type" property="sourceType" />
-        <result column="integration" property="integration" />
-        <result column="register_time" property="registerTime" />
-        <result column="del_flag" property="delFlag" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="id" property="id"/>
+        <result column="mini_openid" property="miniOpenid"/>
+        <result column="mp_openid" property="mpOpenid"/>
+        <result column="unionid" property="unionid"/>
+        <result column="level_id" property="levelId"/>
+        <result column="user_name" property="userName"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="avatar" property="avatar"/>
+        <result column="gender" property="gender"/>
+        <result column="birth" property="birth"/>
+        <result column="city" property="city"/>
+        <result column="source_type" property="sourceType"/>
+        <result column="integration" property="integration"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <update id="addIntegration">
+        update ums_member
+        set
+            integration = integration + #{integration}
+        where id = #{memberId}
+    </update>
 </mapper>

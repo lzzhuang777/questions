@@ -2,8 +2,9 @@ package com.lzz.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.lzz.domain.SignResultVO;
-import com.lzz.service.RedisService;
-import com.lzz.service.UmsSignService;
+import com.lzz.model.UmsMessage;
+import com.lzz.model.UmsMessageTamplate;
+import com.lzz.service.*;
 import com.lzz.utils.Constants;
 import com.netflix.hystrix.util.LongAdder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class UmsSignServiceImpl implements UmsSignService {
 
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private UmsMemberService umsMemberService;
+    @Autowired
+    private UmsMessageTamplateService tamplateService;
+    @Autowired
+    private UmsMessageService umsMessageService;
 
     @Override
     public boolean signIn(Long memberId) {
@@ -34,13 +41,25 @@ public class UmsSignServiceImpl implements UmsSignService {
         String signKey = String.format(Constants.Redis_Expire.USER_SIGN_IN, LocalDate.now().getYear(), memberId);
         //位图的偏移点为当天的日期,如今天,偏移值就是1026
         long monthAndDay = Long.parseLong(LocalDate.now().format(DateTimeFormatter.ofPattern("MMdd")));
-        if(!redisService.getBit(signKey,monthAndDay)){
+        if (!redisService.getBit(signKey, monthAndDay)) {
             //签到
-            redisService.setBit(signKey,monthAndDay,true);
-            //用户签到次数
-            redisService.incr(String.format(Constants.Redis_Expire.USER_SIGN_IN_COUNT,Long.parseLong(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMM"))), memberId),1);
+            redisService.setBit(signKey, monthAndDay, true);
+            //用户签到次数增加1
+            redisService.incr(String.format(Constants.Redis_Expire.USER_SIGN_IN_COUNT, Long.parseLong(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMM"))), memberId), 1);
+            //积分增加
+            umsMemberService.addIntegration(Constants.INTEGRATION_SIGN, memberId);
+            sendMessage(memberId);  //发送签到成功消息
         }
         return true;
+    }
+
+    private void sendMessage(Long memberId) {
+        UmsMessageTamplate tamplate = tamplateService.getById(Constants.Message_Template.Sign_Day);
+        UmsMessage umsMessage = new UmsMessage();
+        umsMessage.setContent(tamplate.getTemplateContent());
+        umsMessage.setReceiveId(memberId);
+        umsMessage.setSendId(Constants.SYSTEM_ID);
+        umsMessageService.save(umsMessage);
     }
 
     @Override
@@ -50,7 +69,7 @@ public class UmsSignServiceImpl implements UmsSignService {
         String signKey = String.format(Constants.Redis_Expire.USER_SIGN_IN, year, memberId);
         LocalDate date = LocalDate.of(year, month, 1);
         //查询出一个偏移值区间的位图集合
-        List<Long> list = redisService.bitField(signKey,date.lengthOfMonth(),month * 100 + 1,false);
+        List<Long> list = redisService.bitField(signKey, date.lengthOfMonth(), month * 100 + 1, false);
         //查询reids中当前用户补签的hash列表 (hash列表的key为补签的日期,value存在就说明这个日期补签了)
         String retroactiveKey = String.format(Constants.Redis_Expire.USER_RETROACTIVE_SIGN_IN, date.getMonthValue(), memberId);
         Set<Object> keys = redisService.sMembers(retroactiveKey);
@@ -79,8 +98,8 @@ public class UmsSignServiceImpl implements UmsSignService {
                 v >>= 1;
             }
         }
-        Object o = redisService.get(String.format(Constants.Redis_Expire.USER_SIGN_IN_COUNT,Long.parseLong(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMM"))), memberId));
-        Integer count = ObjectUtil.isEmpty(0) ? 0 :(Integer)o;
+        Object o = redisService.get(String.format(Constants.Redis_Expire.USER_SIGN_IN_COUNT, Long.parseLong(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMM"))), memberId));
+        Integer count = ObjectUtil.isEmpty(o) ? 0 : (Integer) o;
         signResultVO.setSignFlag(signFlag ? 1 : 0);
         signResultVO.setSignMap(signMap);
         signResultVO.setSignCount(count);
@@ -88,10 +107,14 @@ public class UmsSignServiceImpl implements UmsSignService {
     }
 
     @Override
-    public void integrationRules(Map<String,Integer> map){
-        redisService.hSetAll(Constants.Redis_Expire.Integration_Rules,map);
+    public void integrationRules(Map<String, Integer> map) {
+        redisService.hSetAll(Constants.Redis_Expire.Integration_Rules, map);
     }
 
-
+    @Override
+    public int cumulativeSign(Long memberId, String signCount) {
+        Integer integration = (Integer) redisService.hGet(Constants.Redis_Expire.Integration_Rules, signCount);
+        return umsMemberService.addIntegration(integration, memberId);
+    }
 
 }

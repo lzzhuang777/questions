@@ -17,4 +17,6 @@ public interface UmsSignService {
     SignResultVO selectSignIn(Long memberId, Integer year, Integer month);
 
     void integrationRules(Map<String,Integer> map);
+
+    int cumulativeSign(Long memberId, String signCount);
 }
