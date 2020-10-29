@@ -59,6 +59,6 @@ public class QmsTestServiceImpl extends ServiceImpl<QmsTestMapper, QmsTest> impl
             list.add(questionRelations);
         }
         return qmsTestQuestionRelationsService.saveBatch(list);
-
     }
+
 }

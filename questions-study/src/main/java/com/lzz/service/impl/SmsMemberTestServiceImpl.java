@@ -70,13 +70,13 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
         int score = 0;
         SmsMemberTest smsMemberTest = smsMemberTestMapper.selectById(memberTestId);
         smsMemberTest.setCompleteTime(new Date());
-        smsMemberTest.setIsComplete(true);
+        smsMemberTest.setIsComplete(Boolean.TRUE);
         List<SmsTestAnswer> answerList = smsTestAnswerService.getTestAnswer(memberTestId);
         if(CollUtil.isNotEmpty(answerList)) {
             for (SmsTestAnswer smsTestAnswer : answerList) {
                 CommonResult<QmsQuestion> commonResult = testFeignService.getQuestionById(smsTestAnswer.getQuesId());
                 if (commonResult.getData().getAnswer().equals(smsTestAnswer.getAnswer())) {
-                    smsTestAnswer.setIsCorrect(true);
+                    smsTestAnswer.setIsCorrect(Boolean.TRUE);
                     smsTestAnswerService.updateById(smsTestAnswer);
                     score += 10;
                 }

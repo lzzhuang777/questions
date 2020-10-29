@@ -54,11 +54,13 @@ public class UmsSignServiceImpl implements UmsSignService {
     }
 
     private void sendMessage(Long memberId) {
-        UmsMessageTamplate tamplate = tamplateService.getById(Constants.Message_Template.Sign_Day);
+
+        UmsMessageTamplate template = tamplateService.getById(Constants.Message_Template.Sign_Day);
         UmsMessage umsMessage = new UmsMessage();
-        umsMessage.setContent(tamplate.getTemplateContent());
+        umsMessage.setContent(template.getTemplateContent());
         umsMessage.setReceiveId(memberId);
         umsMessage.setSendId(Constants.SYSTEM_ID);
+        umsMessage.setType(2);
         umsMessageService.save(umsMessage);
     }
 
@@ -114,7 +116,16 @@ public class UmsSignServiceImpl implements UmsSignService {
     @Override
     public int cumulativeSign(Long memberId, String signCount) {
         Integer integration = (Integer) redisService.hGet(Constants.Redis_Expire.Integration_Rules, signCount);
+        UmsMessageTamplate template = tamplateService.getById(Constants.Message_Template.CUMULATIVE_SIGN);
+        UmsMessage umsMessage = new UmsMessage();
+        umsMessage.setContent(String.format(template.getTemplateContent(),Integer.parseInt(signCount),integration));
+        umsMessage.setReceiveId(memberId);
+        umsMessage.setSendId(Constants.SYSTEM_ID);
+        umsMessage.setType(2);
+        umsMessageService.save(umsMessage);
         return umsMemberService.addIntegration(integration, memberId);
     }
+
+
 
 }

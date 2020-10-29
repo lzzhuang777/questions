@@ -85,9 +85,4 @@ public class SmsMemberTestController {
         return CommonResult.failed();
     }
 
-
-
-
-
-
 }

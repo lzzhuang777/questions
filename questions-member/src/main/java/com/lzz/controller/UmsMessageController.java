@@ -7,10 +7,9 @@ import com.lzz.service.UmsMessageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -38,6 +37,17 @@ public class UmsMessageController {
       }
       return CommonResult.failed();
     }
+
+    @ApiOperation("查询消息")
+    @RequestMapping(value = "/list/{memberId}",method = RequestMethod.GET)
+    public CommonResult list(@PathVariable Long memberId){
+
+        List<UmsMessage> list =  umsMessageService.selectList(memberId);
+        return CommonResult.success(list);
+    }
+
+
+
 
 
 }

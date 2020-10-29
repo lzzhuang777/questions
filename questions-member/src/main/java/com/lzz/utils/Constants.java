@@ -24,6 +24,6 @@ public class Constants {
 
     public static class Message_Template{
         public final static long Sign_Day = 2;
-
+        public final static long CUMULATIVE_SIGN = 3;
     }
 }
