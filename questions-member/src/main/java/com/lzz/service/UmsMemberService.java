@@ -15,7 +15,7 @@ import com.lzz.model.UmsMember;
  */
 public interface UmsMemberService extends IService<UmsMember> {
 
-    Object[] login(LoginParam loginParam);
+    String login(LoginParam loginParam);
 
     String loadCurrentUserByTokenAsJson(String token);
 

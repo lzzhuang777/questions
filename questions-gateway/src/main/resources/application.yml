@@ -14,6 +14,18 @@ spring:
       discovery:
         server-addr: localhost:8848
     gateway:
+      # 跨域
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedHeaders: "*"
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+                POST
+                DELETE
+                PUT
+                OPTION
       routes:
         - id: questions-study
           uri: lb://questions-study

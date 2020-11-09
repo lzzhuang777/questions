@@ -58,6 +58,13 @@ public class QmsTestController {
         return CommonResult.success(CommonPage.restPage(qmsTestList));
     }
 
+    @ApiOperation("获取所有测验")
+    @RequestMapping(value = "/p/listAll",method = RequestMethod.GET)
+    public CommonResult<List<QmsTest>> listAll (){
+        List<QmsTest> result = qmsTestService.list();
+        return CommonResult.success(result);
+    }
+
     @ApiOperation("添加测验与试题关系")
     @RequestMapping(value = "/addTestQuestions/{testId}", method = RequestMethod.POST)
     public CommonResult addTestQuestions(@RequestBody List<Long> quesIds,@PathVariable Long testId) {
@@ -79,6 +86,7 @@ public class QmsTestController {
       }
       return CommonResult.failed("解除关系失败");
     }
+
 
 
 }

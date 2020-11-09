@@ -14,6 +14,7 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,15 +36,15 @@ public class UmsMemberController {
     @RequestMapping(value = "/p/login", method = RequestMethod.POST)
     public CommonResult login(@RequestBody LoginParam loginParam) {
 
-        Object o = umsMemberService.login(loginParam);
-        return CommonResult.success(o);
+        String token = umsMemberService.login(loginParam);
+        return CommonResult.success(token);
     }
 
     @ApiOperation("通过token获取用户信息")
     @RequestMapping(value = "/v/loadCurrentUserByTokenAsJson", method = RequestMethod.GET)
-    public CommonResult loadCurrentUserByTokenAsJson(@RequestParam String token) {
+    public CommonResult loadCurrentUserByTokenAsJson(HttpServletRequest request) {
 
-        String userJsons = umsMemberService.loadCurrentUserByTokenAsJson(token);
+        String userJsons = umsMemberService.loadCurrentUserByTokenAsJson(request.getHeader("token"));
         if (StrUtil.isNotEmpty(userJsons)) {
             return CommonResult.success(userJsons);
         }

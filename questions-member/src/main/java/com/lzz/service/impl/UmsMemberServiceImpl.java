@@ -40,7 +40,7 @@ public class UmsMemberServiceImpl extends ServiceImpl<UmsMemberMapper, UmsMember
     private RedisService redisService;
 
     @Override
-    public Object[] login(LoginParam loginParam) {
+    public String login(LoginParam loginParam) {
 
         QueryWrapper<UmsMember> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(UmsMember ::getPhone,loginParam.getPhone())
@@ -51,7 +51,7 @@ public class UmsMemberServiceImpl extends ServiceImpl<UmsMemberMapper, UmsMember
         }
         String token = GenerateToken.generateToken(umsMember);
         saveToken(token,umsMember);
-        return new Object[]{token};
+        return token;
     }
 
     private void saveToken(String token,UmsMember umsMember){
