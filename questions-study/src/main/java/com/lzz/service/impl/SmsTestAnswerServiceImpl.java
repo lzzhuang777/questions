@@ -29,6 +29,14 @@ public class SmsTestAnswerServiceImpl extends ServiceImpl<SmsTestAnswerMapper, S
     }
 
     @Override
+    public SmsTestAnswer getTestAnswer( Long testId,Long quesId) {
+        QueryWrapper<SmsTestAnswer> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(SmsTestAnswer::getMemberTestId,testId)
+                .eq(SmsTestAnswer::getQuesId,quesId);
+        return getOne(wrapper);
+    }
+
+    @Override
     public boolean submitQuesAnswer(SmsTestAnswer smsTestAnswer) {
         return save(smsTestAnswer);
     }

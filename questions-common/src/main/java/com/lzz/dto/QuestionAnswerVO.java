@@ -20,6 +20,9 @@ public class QuestionAnswerVO {
     @ApiModelProperty(value = "题目标题")
     private String title;
 
+    @ApiModelProperty(value = "测验标题")
+    private String testName;
+
     @ApiModelProperty(value = "正确答案")
     private String answer;
 

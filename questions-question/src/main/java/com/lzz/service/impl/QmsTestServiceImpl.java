@@ -61,4 +61,12 @@ public class QmsTestServiceImpl extends ServiceImpl<QmsTestMapper, QmsTest> impl
         return qmsTestQuestionRelationsService.saveBatch(list);
     }
 
+    @Override
+    public List<QmsTest> listAll(Long type) {
+        QueryWrapper<QmsTest> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<QmsTest> lambda = wrapper.lambda();
+        lambda.eq(QmsTest::getType,type)
+                .orderByAsc(QmsTest::getCreateTime);
+        return list(wrapper);
+    }
 }

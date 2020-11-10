@@ -1,6 +1,9 @@
 package com.lzz.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
 import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.SmsMemberTest;
@@ -52,15 +55,12 @@ public class SmsMemberTestController {
         return CommonResult.success(list);
     }
 
-    @ApiOperation("查询测验题目列表")
-    @RequestMapping(value = "/getTestQuesList/{memberTestId}", method = RequestMethod.GET)
-    public CommonResult<List<QuestionAnswerVO>> getTestQuesList (@PathVariable Long memberTestId){
+    @ApiOperation("分页查询测验题目")
+    @RequestMapping(value = "/getTestQuesList/{memberTestId}", method = RequestMethod.POST)
+    public CommonResult<CommonPage<QuestionAnswerVO>> getTestQuesList (@PathVariable Long memberTestId,@RequestParam Integer pageNum){
 
-        List<QuestionAnswerVO> list = smsMemberTestService.getTestQuesList(memberTestId);
-        if(CollUtil.isEmpty(list)){
-            return CommonResult.failed();
-        }
-        return CommonResult.success(list);
+        Page<QuestionAnswerVO> page = smsMemberTestService.getTestQuesList(memberTestId,pageNum);
+        return CommonResult.success(CommonPage.restPage(page));
     }
 
     @ApiOperation("选择题目答案")
@@ -84,5 +84,15 @@ public class SmsMemberTestController {
         }
         return CommonResult.failed();
     }
+
+    @ApiOperation("创建测验")
+    @RequestMapping(value = "/makeMemberTest", method = RequestMethod.POST)
+    public CommonResult makeMemberTest(@RequestParam Long memberId,@RequestParam Long type){
+
+        Long memberTestId  = smsMemberTestService.makeMemberTest(type,memberId);
+        return CommonResult.success(memberTestId);
+    }
+
+
 
 }

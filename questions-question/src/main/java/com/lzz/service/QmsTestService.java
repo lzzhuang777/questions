@@ -19,5 +19,6 @@ public interface QmsTestService extends IService<QmsTest> {
 
     boolean addTestQuestions(List<Long> quesIds, Long testId);
 
+    List<QmsTest> listAll(Long type);
 
 }

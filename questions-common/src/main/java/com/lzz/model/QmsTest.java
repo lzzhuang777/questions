@@ -31,7 +31,7 @@ public class QmsTest implements Serializable {
     private String testName;
 
     @ApiModelProperty(value = "测验类型")
-    private Integer type;
+    private Long type;
 
     @ApiModelProperty(value = "测验logo")
     private String pic;

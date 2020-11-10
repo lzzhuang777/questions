@@ -99,6 +99,13 @@ public class QmsQuestionController {
        return qmsQuestionService.getQuestionsByIds(ids);
     }
 
+    @ApiOperation("根据题目 id 查询答案")
+    @RequestMapping(value = "/getQuestionAnswerVOById",method = RequestMethod.GET)
+    public QuestionAnswerVO getQuestionAnswerVOById(@RequestParam Long quesId){
+
+        return qmsQuestionService.getQuestionAnswerVOById(quesId);
+    }
+
     @ApiOperation("根据题目 id 查询试题答案详情")
     @RequestMapping(value = "/getQuestionAnswerVO/{id}",method = RequestMethod.GET)
     public QuestionAnswerVO getQuestionAnswerVO(@PathVariable Long id){

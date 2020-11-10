@@ -59,9 +59,9 @@ public class QmsTestController {
     }
 
     @ApiOperation("获取所有测验")
-    @RequestMapping(value = "/p/listAll",method = RequestMethod.GET)
-    public CommonResult<List<QmsTest>> listAll (){
-        List<QmsTest> result = qmsTestService.list();
+    @RequestMapping(value = "/listAll",method = RequestMethod.GET)
+    public CommonResult<List<QmsTest>> listAll (@RequestParam Long type){
+        List<QmsTest> result = qmsTestService.listAll(type);
         return CommonResult.success(result);
     }
 

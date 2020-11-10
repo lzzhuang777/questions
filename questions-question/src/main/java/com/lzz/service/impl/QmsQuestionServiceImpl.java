@@ -42,10 +42,10 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
     @Override
     public boolean create(QuestionAnswerVO questionAnswerVO) {
         QmsQuestion qmsQuestion = new QmsQuestion();
-        BeanUtil.copyProperties(questionAnswerVO,qmsQuestion);
+        BeanUtil.copyProperties(questionAnswerVO, qmsQuestion);
         int quesId = qmsQuestionMapper.insert(qmsQuestion);
-        if(CollUtil.isNotEmpty(questionAnswerVO.getAnswerList())){
-            for (QmsAnswer qmsAnswer : questionAnswerVO.getAnswerList()){
+        if (CollUtil.isNotEmpty(questionAnswerVO.getAnswerList())) {
+            for (QmsAnswer qmsAnswer : questionAnswerVO.getAnswerList()) {
                 qmsAnswer.setQuestionId(qmsQuestion.getId());
                 qmsAnswerService.save(qmsAnswer);
             }
@@ -54,17 +54,17 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
     }
 
     @Override
-    public boolean update( QuestionAnswerVO questionAnswerVO) {
+    public boolean update(QuestionAnswerVO questionAnswerVO) {
         QmsQuestion qmsQuestion = new QmsQuestion();
-        BeanUtil.copyProperties(questionAnswerVO,qmsQuestion);
+        BeanUtil.copyProperties(questionAnswerVO, qmsQuestion);
         qmsQuestion.setId(questionAnswerVO.getQuesId());
         qmsQuestion.setUpdateTime(new Date());
-        if(CollUtil.isNotEmpty(questionAnswerVO.getAnswerList())){
-            for (QmsAnswer qmsAnswer : questionAnswerVO.getAnswerList()){
-                if(qmsAnswer.getId()==null){
+        if (CollUtil.isNotEmpty(questionAnswerVO.getAnswerList())) {
+            for (QmsAnswer qmsAnswer : questionAnswerVO.getAnswerList()) {
+                if (qmsAnswer.getId() == null) {
                     qmsAnswer.setQuestionId(questionAnswerVO.getQuesId());
                     qmsAnswerService.save(qmsAnswer);
-                }else {
+                } else {
                     qmsAnswerService.updateById(qmsAnswer);
                 }
             }
@@ -103,8 +103,9 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
         return qmsAnswerService.list(queryWrapper);
 
     }
+
     @Override
-    public QuestionAnswerVO getQuestionAnswerVO(Long id){
+    public QuestionAnswerVO getQuestionAnswerVO(Long id) {
 
         QmsQuestion qmsQuestion = getQuestionById(id);
         QuestionAnswerVO questionAnswerVO = new QuestionAnswerVO();
@@ -132,12 +133,24 @@ public class QmsQuestionServiceImpl extends ServiceImpl<QmsQuestionMapper, QmsQu
     }
 
     @Override
-    public List<QmsQuestion> selectQuesList(String query,Long testId) {
-        return qmsQuestionMapper.selectQuesList(query,testId);
+    public QuestionAnswerVO getQuestionAnswerVOById(long quesId) {
+        QmsQuestion qmsQuestion = getQuestionById(quesId);
+        QuestionAnswerVO questionAnswerVO = new QuestionAnswerVO();
+        BeanUtil.copyProperties(qmsQuestion, questionAnswerVO);
+        List<QmsAnswer> answerList = getAnswerList(qmsQuestion.getId());
+        questionAnswerVO.setQuesId(qmsQuestion.getId());
+        questionAnswerVO.setAnswerList(answerList);
+        return questionAnswerVO;
+    }
+
+
+    @Override
+    public List<QmsQuestion> selectQuesList(String query, Long testId) {
+        return qmsQuestionMapper.selectQuesList(query, testId);
     }
 
     @Override
-    public List<QmsQuestion> selectQuestionsByTestId (Long testId){
+    public List<QmsQuestion> selectQuestionsByTestId(Long testId) {
         return qmsQuestionMapper.selectQuestionsByTestId(testId);
     }
 }

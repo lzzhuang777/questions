@@ -37,6 +37,9 @@ public class SmsMemberTest implements Serializable {
     @ApiModelProperty(value = "测验名称")
     private String testName;
 
+    @ApiModelProperty(value = "测验类型")
+    private Long type;
+
     @ApiModelProperty(value = "是否完成（0：未完成，1已完成）")
     private Boolean isComplete;
 
