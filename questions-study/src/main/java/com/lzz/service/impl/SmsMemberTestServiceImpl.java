@@ -93,7 +93,7 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
         return smsMemberTest;
     }
 
-    private Long getMemberId (String token){
+    public Long getMemberId (String token){
         String tokenUser = null;
         if ((tokenUser = (String) redisService.get(token)) == null) {
             Asserts.fail("token过期");
@@ -108,7 +108,7 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
         List<QmsTest> qmsTests = testFeignService.listAll(type).getData();
         QueryWrapper<SmsMemberTest> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<SmsMemberTest> lamba = wrapper.lambda();
-        lamba.eq(SmsMemberTest::getType, type);
+        lamba.eq(SmsMemberTest::getType, type).eq(SmsMemberTest::getMemberId,memberId);
         List<SmsMemberTest> list = list(wrapper);
         SmsMemberTest smsMemberTest = new SmsMemberTest();
         if (CollUtil.isEmpty(list)) {

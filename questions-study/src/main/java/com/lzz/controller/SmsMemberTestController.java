@@ -8,6 +8,7 @@ import com.lzz.api.CommonResult;
 import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.SmsMemberTest;
 import com.lzz.model.SmsTestAnswer;
+import com.lzz.model.UmsMember;
 import com.lzz.service.SmsMemberTestService;
 import com.lzz.service.SmsTestAnswerService;
 import io.swagger.annotations.Api;
@@ -66,7 +67,6 @@ public class SmsMemberTestController {
     @ApiOperation("选择题目答案")
     @RequestMapping(value = "/submitQuesAnswer", method = RequestMethod.POST)
     public CommonResult submitQuesAnswer(@RequestBody SmsTestAnswer smsTestAnswer){
-
         boolean result = smsTestAnswerService.submitQuesAnswer(smsTestAnswer);
         if(result){
             return CommonResult.success(null);

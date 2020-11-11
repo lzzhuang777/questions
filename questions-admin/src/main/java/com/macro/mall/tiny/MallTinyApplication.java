@@ -12,7 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class MallTinyApplication {
 
     public static void main(String[] args) {
-        ElasticApmAttacher.attach();
+        //ElasticApmAttacher.attach();
         SpringApplication.run(MallTinyApplication.class, args);
     }
 
