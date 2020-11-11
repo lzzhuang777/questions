@@ -39,13 +39,10 @@ public class AuthGlobalFilter  implements GlobalFilter, Ordered {
         }
         String requestUrl = request.getPath().toString();
         if (requestUrl.split("/")[3].equals("api-docs")|| requestUrl.split("/")[4].equals("p")) {
-            log.info("此接口不需要token验证，直接通行");
             return chain.filter(exchange);
         }
-        // token 验证
         String token = request.getHeaders().getFirst("token");
         if (StrUtil.isEmpty(token) || !redisService.hasKey(token)){
-            log.error("token = {}",token);
             throw new ApiException(ResultCode.UNAUTHORIZED);
         }
         return chain.filter(exchange);

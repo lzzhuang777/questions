@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lzz.api.ResultCode;
 import com.lzz.dto.LoginParam;
 import com.lzz.exception.ApiException;
+import com.lzz.exception.Asserts;
 import com.lzz.mapper.UmsMemberMapper;
 import com.lzz.model.UmsMember;
 import com.lzz.service.RedisService;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author lzz
@@ -43,42 +44,42 @@ public class UmsMemberServiceImpl extends ServiceImpl<UmsMemberMapper, UmsMember
     public String login(LoginParam loginParam) {
 
         QueryWrapper<UmsMember> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(UmsMember ::getPhone,loginParam.getPhone())
+        wrapper.lambda().eq(UmsMember::getPhone, loginParam.getPhone())
                 .eq(UmsMember::getPassword, SecureUtil.md5(loginParam.getPassword()));
         UmsMember umsMember = getOne(wrapper);
-        if(ObjectUtil.isEmpty(umsMember)){
+        if (ObjectUtil.isEmpty(umsMember)) {
             return null;
         }
         String token = GenerateToken.generateToken(umsMember);
-        saveToken(token,umsMember);
+        saveToken(token, umsMember);
         return token;
     }
 
-    private void saveToken(String token,UmsMember umsMember){
+    private void saveToken(String token, UmsMember umsMember) {
 
         String tokenKey = Constants.USER_TOKEN_PREFIX + umsMember.getPhone();
         Object tokenValue = redisService.get(tokenKey);
-        if(ObjectUtil.isNotEmpty(tokenValue)){
+        if (ObjectUtil.isNotEmpty(tokenValue)) {
             logger.info("[saveToken]" + "删除重复登陆信息");
             redisService.del(tokenValue.toString());
         }
         logger.info("[saveToken]" + "缓存token信息");
-        redisService.set(tokenKey,token, Constants.Redis_Expire.SESSION_TIMEOUT);
+        redisService.set(tokenKey, token, Constants.Redis_Expire.SESSION_TIMEOUT);
         logger.info("[saveToken]" + "缓存用户信息");
-        redisService.set(token,JSON.toJSONString(umsMember),Constants.Redis_Expire.SESSION_TIMEOUT);
+        redisService.set(token, JSON.toJSONString(umsMember), Constants.Redis_Expire.SESSION_TIMEOUT);
     }
 
     @Override
-    public String loadCurrentUserByTokenAsJson(String token) {
+    public UmsMember loadCurrentUserByTokenAsJson(String token) {
         String tokenUser = null;
         if ((tokenUser = (String) redisService.get(token)) == null) {
-            throw new ApiException(ResultCode.UNAUTHORIZED);
+            Asserts.fail("token过期");
         }
-        return tokenUser;
+        return JSON.parseObject(tokenUser, UmsMember.class);
     }
 
     @Override
-    public int addIntegration(Integer integration,Long memberId){
+    public int addIntegration(Integer integration, Long memberId) {
         return umsMemberMapper.addIntegration(integration, memberId);
     }
 

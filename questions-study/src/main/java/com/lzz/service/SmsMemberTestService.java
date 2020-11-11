@@ -24,6 +24,6 @@ public interface SmsMemberTestService extends IService<SmsMemberTest> {
 
     SmsMemberTest submitTest(Long memberTestId);
 
-    Long makeMemberTest(Long type,long memberId);
+    Long makeMemberTest(Long type,String token);
 
 }

@@ -2,19 +2,19 @@ package com.lzz.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lzz.api.CommonResult;
 import com.lzz.dto.QuestionAnswerVO;
+import com.lzz.exception.Asserts;
 import com.lzz.feign.QuestionFeginService;
 import com.lzz.feign.TestFeignService;
 import com.lzz.mapper.SmsMemberTestMapper;
-import com.lzz.model.QmsQuestion;
-import com.lzz.model.QmsTest;
-import com.lzz.model.SmsMemberTest;
-import com.lzz.model.SmsTestAnswer;
+import com.lzz.model.*;
+import com.lzz.service.RedisService;
 import com.lzz.service.SmsMemberTestService;
 import com.lzz.service.SmsTestAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,8 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
     private QuestionFeginService questionFeginService;
     @Autowired
     private SmsTestAnswerService smsTestAnswerService;
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public List<SmsMemberTest> getTestByMemberId(Long memberId) {
@@ -91,7 +93,18 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
         return smsMemberTest;
     }
 
-    public Long makeMemberTest(Long type, long memberId) {
+    private Long getMemberId (String token){
+        String tokenUser = null;
+        if ((tokenUser = (String) redisService.get(token)) == null) {
+            Asserts.fail("token过期");
+        }
+        UmsMember umsMember = JSON.parseObject(tokenUser,UmsMember.class);
+        return umsMember.getId();
+    }
+
+    public Long makeMemberTest(Long type, String token) {
+
+        long memberId = getMemberId(token);
         List<QmsTest> qmsTests = testFeignService.listAll(type).getData();
         QueryWrapper<SmsMemberTest> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<SmsMemberTest> lamba = wrapper.lambda();
@@ -102,8 +115,12 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
             smsMemberTest.setTestId(qmsTests.get(0).getId());
             smsMemberTest.setTestName(qmsTests.get(0).getTestName());
         } else {
-            smsMemberTest.setTestId(qmsTests.get(list.size()).getId());
-            smsMemberTest.setTestName(qmsTests.get(list.size()).getTestName());
+            if(list.size() == qmsTests.size()){
+                Asserts.fail("试卷已全部生成，无试题可生成试卷");
+            }else {
+                smsMemberTest.setTestId(qmsTests.get(list.size()).getId());
+                smsMemberTest.setTestName(qmsTests.get(list.size()).getTestName());
+            }
         }
         smsMemberTest.setType(type);
         smsMemberTest.setMemberId(memberId);

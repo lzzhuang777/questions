@@ -12,11 +12,11 @@ import java.util.List;
  */
 public interface MemberColletionService {
 
-    List<Document> list (Long memberId);
+    List<Document> list (String token);
 
-    void deleteByQuesIdAndMemberId(Long memberId,Long quesId);
+    void deleteByQuesIdAndMemberId(String token,Long quesId);
 
-    void create(Long memberId,MemberCollectionQuestions memberCollectionQuestions);
+    void create(String token,MemberCollectionQuestions memberCollectionQuestions);
 
-    boolean isCollection(Long memberId,Long quesId);
+    boolean isCollection(String token,Long quesId);
 }

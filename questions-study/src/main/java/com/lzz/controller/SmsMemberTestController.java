@@ -87,9 +87,9 @@ public class SmsMemberTestController {
 
     @ApiOperation("创建测验")
     @RequestMapping(value = "/makeMemberTest", method = RequestMethod.POST)
-    public CommonResult makeMemberTest(@RequestParam Long memberId,@RequestParam Long type){
+    public CommonResult makeMemberTest(@RequestHeader String token,@RequestParam Long type){
 
-        Long memberTestId  = smsMemberTestService.makeMemberTest(type,memberId);
+        Long memberTestId  = smsMemberTestService.makeMemberTest(type,token);
         return CommonResult.success(memberTestId);
     }
 

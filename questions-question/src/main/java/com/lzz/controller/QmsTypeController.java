@@ -67,9 +67,9 @@ public class QmsTypeController {
     }
 
     @ApiOperation("查询所有试题类型")
-    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
-    public List<QmsType> listAll() {
-        return qmsTypeService.list();
+    @RequestMapping(value = "/p/listAll", method = RequestMethod.GET)
+    public CommonResult<List<QmsType>> listAll() {
+        return CommonResult.success(qmsTypeService.list());
     }
 
 

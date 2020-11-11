@@ -1,6 +1,7 @@
 package com.lzz.controller;
 
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.lzz.api.CommonResult;
 import com.lzz.domain.MemberCollectionQuestions;
@@ -44,8 +45,8 @@ public class UmsMemberController {
     @RequestMapping(value = "/v/loadCurrentUserByTokenAsJson", method = RequestMethod.GET)
     public CommonResult loadCurrentUserByTokenAsJson(HttpServletRequest request) {
 
-        String userJsons = umsMemberService.loadCurrentUserByTokenAsJson(request.getHeader("token"));
-        if (StrUtil.isNotEmpty(userJsons)) {
+        UmsMember userJsons = umsMemberService.loadCurrentUserByTokenAsJson(request.getHeader("token"));
+        if (ObjectUtil.isNotEmpty(userJsons)) {
             return CommonResult.success(userJsons);
         }
         return CommonResult.failed();
@@ -63,34 +64,34 @@ public class UmsMemberController {
     }
 
     @ApiOperation("用户收藏题目")
-    @RequestMapping(value = "/v/collectionQuestion/{id}", method = RequestMethod.POST)
-    public CommonResult collectionQuestion(@PathVariable Long id, @RequestBody MemberCollectionQuestions memberCollectionQuestions){
+    @RequestMapping(value = "/v/collectionQuestion", method = RequestMethod.POST)
+    public CommonResult collectionQuestion(@RequestHeader String token, @RequestBody MemberCollectionQuestions memberCollectionQuestions){
 
-        memberColletionService.create(id,memberCollectionQuestions);
+        memberColletionService.create(token,memberCollectionQuestions);
         return CommonResult.success(null);
     }
 
     @ApiOperation("查询用户收藏题目")
-    @RequestMapping(value = "/v/selectCollections/{id}", method = RequestMethod.GET)
-    public CommonResult selectCollections(@PathVariable Long id){
+    @RequestMapping(value = "/v/selectCollections", method = RequestMethod.GET)
+    public CommonResult selectCollections(@RequestHeader String token){
 
-      List<Document> list =  memberColletionService.list(id);
+      List<Document> list =  memberColletionService.list(token);
       return CommonResult.success(list);
     }
 
     @ApiOperation("移除收藏题目")
-    @RequestMapping(value = "/v/delCollection/{id}", method = RequestMethod.GET)
-    public CommonResult delCollection (@PathVariable Long id,@RequestParam Long quesId){
+    @RequestMapping(value = "/v/delCollection", method = RequestMethod.GET)
+    public CommonResult delCollection (@RequestHeader String token,@RequestParam Long quesId){
 
-        memberColletionService.deleteByQuesIdAndMemberId(id,quesId);
+        memberColletionService.deleteByQuesIdAndMemberId(token,quesId);
         return CommonResult.success(null);
     }
 
     @ApiOperation("查询题目是否已收藏")
-    @RequestMapping(value = "/v/isCollection/{id}", method = RequestMethod.GET)
-    public CommonResult isCollection (@PathVariable Long id,@RequestParam Long quesId){
+    @RequestMapping(value = "/v/isCollection", method = RequestMethod.GET)
+    public CommonResult isCollection (@RequestHeader String token,@RequestParam Long quesId){
 
-        boolean result = memberColletionService.isCollection(id,quesId);
+        boolean result = memberColletionService.isCollection(token,quesId);
         return CommonResult.success(result);
     }
 

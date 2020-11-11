@@ -28,6 +28,6 @@ public interface QuestionTypeFeignService {
     @RequestMapping(value = "/qms/qmsType/{qmsTypeId}", method = RequestMethod.GET)
     CommonResult<QmsType> getQuestionById(@PathVariable Long qmsTypeId);
 
-    @RequestMapping(value = "/qms/qmsType/listAll", method = RequestMethod.GET)
-    List<QmsType> listAll();
+    @RequestMapping(value = "/qms/qmsType/p/listAll", method = RequestMethod.GET)
+    CommonResult<List<QmsType>> listAll();
 }

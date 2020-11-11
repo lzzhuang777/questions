@@ -45,7 +45,7 @@ public class QmsQuestionTypeController {
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     public CommonResult listAll() {
 
-        List<QmsType> list = questionTypeFeignService.listAll();
+        List<QmsType> list = questionTypeFeignService.listAll().getData();
         return CommonResult.success(list);
     }
 
