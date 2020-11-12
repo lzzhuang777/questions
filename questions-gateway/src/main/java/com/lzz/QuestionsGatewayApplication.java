@@ -1,12 +1,12 @@
 package com.lzz;
 
-import co.elastic.apm.attach.ElasticApmAttacher;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.lzz","com.lzz.exception"})
 @EnableDiscoveryClient
 public class QuestionsGatewayApplication {
 

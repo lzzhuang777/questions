@@ -73,7 +73,7 @@ public class UmsMemberServiceImpl extends ServiceImpl<UmsMemberMapper, UmsMember
     public UmsMember loadCurrentUserByTokenAsJson(String token) {
         String tokenUser = null;
         if ((tokenUser = (String) redisService.get(token)) == null) {
-            Asserts.fail("token过期");
+            throw new ApiException(ResultCode.UNAUTHORIZED);
         }
         return JSON.parseObject(tokenUser, UmsMember.class);
     }

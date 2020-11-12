@@ -75,7 +75,7 @@ public class SmsMemberTestController {
     }
 
     @ApiOperation("提交测验")
-    @RequestMapping(value = "/submitTest/{memberTestId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/submitTest/{memberTestId}", method = RequestMethod.POST)
     public CommonResult submitTest(@PathVariable Long memberTestId){
 
         SmsMemberTest result = smsMemberTestService.submitTest(memberTestId);

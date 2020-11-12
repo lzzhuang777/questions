@@ -75,19 +75,16 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
     public SmsMemberTest submitTest(Long memberTestId) {
         int score = 0;
         SmsMemberTest smsMemberTest = smsMemberTestMapper.selectById(memberTestId);
-        smsMemberTest.setCompleteTime(new Date());
-        smsMemberTest.setIsComplete(Boolean.TRUE);
         List<SmsTestAnswer> answerList = smsTestAnswerService.getTestAnswer(memberTestId);
         if (CollUtil.isNotEmpty(answerList)) {
             for (SmsTestAnswer smsTestAnswer : answerList) {
-                CommonResult<QmsQuestion> commonResult = testFeignService.getQuestionById(smsTestAnswer.getQuesId());
-                if (commonResult.getData().getAnswer().equals(smsTestAnswer.getAnswer())) {
-                    smsTestAnswer.setIsCorrect(Boolean.TRUE);
-                    smsTestAnswerService.updateById(smsTestAnswer);
+                if (smsTestAnswer.getIsCorrect()) {
                     score += 10;
                 }
             }
         }
+        smsMemberTest.setCompleteTime(new Date());
+        smsMemberTest.setIsComplete(Boolean.TRUE);
         smsMemberTest.setScore(score);
         updateById(smsMemberTest);
         return smsMemberTest;

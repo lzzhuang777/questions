@@ -95,9 +95,6 @@ public class UmsMemberController {
         return CommonResult.success(result);
     }
 
-
-
-
 }
 
 

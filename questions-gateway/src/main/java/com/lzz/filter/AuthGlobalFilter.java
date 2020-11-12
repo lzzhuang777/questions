@@ -1,12 +1,9 @@
 package com.lzz.filter;
 
 import cn.hutool.core.util.StrUtil;
-import com.lzz.api.ResultCode;
-import com.lzz.exception.ApiException;
 import com.lzz.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -43,7 +40,7 @@ public class AuthGlobalFilter  implements GlobalFilter, Ordered {
         }
         String token = request.getHeaders().getFirst("token");
         if (StrUtil.isEmpty(token) || !redisService.hasKey(token)){
-            throw new ApiException(ResultCode.UNAUTHORIZED);
+            throw new RuntimeException("401");
         }
         return chain.filter(exchange);
     }

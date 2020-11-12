@@ -49,7 +49,7 @@ public class SmsTestAnswerServiceImpl extends ServiceImpl<SmsTestAnswerMapper, S
         }else{
             smsTestAnswer.setId(newAnswer.getId());
             smsTestAnswer.setUpdateTime(new Date());
-            return updateById(newAnswer);
+            return updateById(smsTestAnswer);
         }
     }
 }
