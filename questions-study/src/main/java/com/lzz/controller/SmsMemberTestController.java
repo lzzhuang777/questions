@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lzz.api.CommonPage;
 import com.lzz.api.CommonResult;
+import com.lzz.dto.MemberTestVO;
 import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.SmsMemberTest;
 import com.lzz.model.SmsTestAnswer;
@@ -78,7 +79,7 @@ public class SmsMemberTestController {
     @RequestMapping(value = "/submitTest/{memberTestId}", method = RequestMethod.POST)
     public CommonResult submitTest(@PathVariable Long memberTestId){
 
-        SmsMemberTest result = smsMemberTestService.submitTest(memberTestId);
+        MemberTestVO result = smsMemberTestService.submitTest(memberTestId);
         if(result!= null){
             return CommonResult.success(result);
         }

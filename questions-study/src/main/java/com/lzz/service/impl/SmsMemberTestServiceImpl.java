@@ -1,5 +1,6 @@
 package com.lzz.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lzz.api.CommonResult;
+import com.lzz.dto.MemberTestVO;
 import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.exception.Asserts;
 import com.lzz.feign.QuestionFeginService;
@@ -20,6 +22,7 @@ import com.lzz.service.SmsTestAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -72,8 +75,9 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
     }
 
     @Override
-    public SmsMemberTest submitTest(Long memberTestId) {
+    public MemberTestVO submitTest(Long memberTestId) {
         int score = 0;
+        MemberTestVO memberTestVO = new MemberTestVO();
         SmsMemberTest smsMemberTest = smsMemberTestMapper.selectById(memberTestId);
         List<SmsTestAnswer> answerList = smsTestAnswerService.getTestAnswer(memberTestId);
         if (CollUtil.isNotEmpty(answerList)) {
@@ -87,7 +91,9 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
         smsMemberTest.setIsComplete(Boolean.TRUE);
         smsMemberTest.setScore(score);
         updateById(smsMemberTest);
-        return smsMemberTest;
+        BeanUtil.copyProperties(smsMemberTest,memberTestVO);
+        memberTestVO.setTestAnswers(answerList);
+        return memberTestVO;
     }
 
     public Long getMemberId (String token){
@@ -123,7 +129,21 @@ public class SmsMemberTestServiceImpl extends ServiceImpl<SmsMemberTestMapper, S
         smsMemberTest.setMemberId(memberId);
         smsMemberTest.setStartTime(new Date());
         smsMemberTestMapper.insert(smsMemberTest);
+        addMemberAnswer(smsMemberTest.getId(),smsMemberTest.getTestId());
         return smsMemberTest.getId();
+    }
+
+    private void addMemberAnswer (long memberTestId,long testId){
+
+        List<Long> ids = testFeignService.selectIdsByTestId(testId);
+        List<SmsTestAnswer> smsTestAnswers = new ArrayList<>(ids.size());
+        for (long id :ids){
+            SmsTestAnswer smsTestAnswer = new SmsTestAnswer();
+            smsTestAnswer.setMemberTestId(memberTestId);
+            smsTestAnswer.setQuesId(id);
+            smsTestAnswers.add(smsTestAnswer);
+        }
+        smsTestAnswerService.saveBatch(smsTestAnswers);
     }
 
 

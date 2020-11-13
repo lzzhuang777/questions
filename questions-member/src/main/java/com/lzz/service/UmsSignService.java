@@ -14,7 +14,7 @@ public interface UmsSignService {
 
     boolean signIn(Long memberId);
 
-    SignResultVO selectSignIn(Long memberId, Integer year, Integer month);
+    SignResultVO selectSignIn(String token, Integer year, Integer month);
 
     void integrationRules(Map<String,Integer> map);
 

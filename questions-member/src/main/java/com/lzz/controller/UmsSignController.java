@@ -37,9 +37,9 @@ public class UmsSignController {
 
     @ApiOperation("查询用户在year年month月的签到情况")
     @RequestMapping(value = "/selectSignIn", method = RequestMethod.GET)
-    public CommonResult selectSignIn(@RequestParam Long memberId, @RequestParam Integer year, @RequestParam Integer month) {
+    public CommonResult selectSignIn(@RequestHeader String token, @RequestParam Integer year, @RequestParam Integer month) {
 
-        SignResultVO signResultVO = umsSignService.selectSignIn(memberId, year, month);
+        SignResultVO signResultVO = umsSignService.selectSignIn(token, year, month);
         return CommonResult.success(signResultVO);
     }
 

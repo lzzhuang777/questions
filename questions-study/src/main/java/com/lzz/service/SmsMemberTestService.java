@@ -2,8 +2,10 @@ package com.lzz.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lzz.dto.MemberTestVO;
 import com.lzz.dto.QuestionAnswerVO;
 import com.lzz.model.SmsMemberTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,8 +24,9 @@ public interface SmsMemberTestService extends IService<SmsMemberTest> {
 
     Page<QuestionAnswerVO> getTestQuesList (Long testId, Integer pageNum);
 
-    SmsMemberTest submitTest(Long memberTestId);
+    MemberTestVO submitTest(Long memberTestId);
 
+    @Transactional
     Long makeMemberTest(Long type,String token);
 
     Long getMemberId (String token);

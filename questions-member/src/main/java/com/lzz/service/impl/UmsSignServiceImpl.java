@@ -2,6 +2,8 @@ package com.lzz.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.lzz.domain.SignResultVO;
+import com.lzz.dto.SignDetail;
+import com.lzz.model.UmsMember;
 import com.lzz.model.UmsMessage;
 import com.lzz.model.UmsMessageTamplate;
 import com.lzz.service.*;
@@ -12,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author lzz
@@ -65,17 +64,18 @@ public class UmsSignServiceImpl implements UmsSignService {
     }
 
     @Override
-    public SignResultVO selectSignIn(Long memberId, Integer year, Integer month) {
+    public SignResultVO selectSignIn(String token, Integer year, Integer month) {
+        UmsMember umsMember =umsMemberService.loadCurrentUserByTokenAsJson(token);
         SignResultVO signResultVO = new SignResultVO();
         boolean signFlag = Boolean.FALSE;
-        String signKey = String.format(Constants.Redis_Expire.USER_SIGN_IN, year, memberId);
+        String signKey = String.format(Constants.Redis_Expire.USER_SIGN_IN, year, umsMember.getId());
         LocalDate date = LocalDate.of(year, month, 1);
         //查询出一个偏移值区间的位图集合
         List<Long> list = redisService.bitField(signKey, date.lengthOfMonth(), month * 100 + 1, false);
         //查询reids中当前用户补签的hash列表 (hash列表的key为补签的日期,value存在就说明这个日期补签了)
-        String retroactiveKey = String.format(Constants.Redis_Expire.USER_RETROACTIVE_SIGN_IN, date.getMonthValue(), memberId);
+        String retroactiveKey = String.format(Constants.Redis_Expire.USER_RETROACTIVE_SIGN_IN, date.getMonthValue(), umsMember.getId());
         Set<Object> keys = redisService.sMembers(retroactiveKey);
-        TreeMap<Integer, Integer> signMap = new TreeMap<>();
+        List<SignDetail> signDetails = new ArrayList<>(date.lengthOfMonth());
         if (list != null && list.size() > 0) {
             // 由低位到高位，为0表示未签，为1表示已签
             long v = list.get(0) == null ? 0 : list.get(0);
@@ -96,14 +96,19 @@ public class UmsSignServiceImpl implements UmsSignService {
                     type = 2;
                 }
                 //返回给前端当月的所有日期,以及签,补签或者未签的状态
-                signMap.put(Integer.parseInt(d.format(DateTimeFormatter.ofPattern("dd"))), type);
+                SignDetail signDetail = new SignDetail();
+                signDetail.setDay(Integer.parseInt(d.format(DateTimeFormatter.ofPattern("dd"))));
+                signDetail.setIsSign(type);
+                signDetails.add(signDetail);
+                //signMap.put(Integer.parseInt(d.format(DateTimeFormatter.ofPattern("dd"))), type);
                 v >>= 1;
             }
         }
-        Object o = redisService.get(String.format(Constants.Redis_Expire.USER_SIGN_IN_COUNT, Long.parseLong(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMM"))), memberId));
+        Collections.sort(signDetails);
+        Object o = redisService.get(String.format(Constants.Redis_Expire.USER_SIGN_IN_COUNT, Long.parseLong(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMM"))), umsMember.getId()));
         Integer count = ObjectUtil.isEmpty(o) ? 0 : (Integer) o;
         signResultVO.setSignFlag(signFlag ? 1 : 0);
-        signResultVO.setSignMap(signMap);
+        signResultVO.setSignList(signDetails);
         signResultVO.setSignCount(count);
         return signResultVO;
     }
